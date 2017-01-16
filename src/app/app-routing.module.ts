@@ -3,9 +3,12 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { NotFoundComponent } from './shared/not-found/not-found.component';
 
+/**
+ * loading all modules lazily
+ */
 const routes: Routes = [
   { path: '', children: [
-    { path: '', pathMatch: 'full', redirectTo: '/about' },
+    { path: '', pathMatch: 'full', redirectTo: '/user' },
     { path: 'about', data: { title: '关于我们' }, loadChildren: './about/about.module#AboutModule' },
     { path: 'bbs', data: { title: '微站论坛' }, loadChildren: './bbs/bbs.module#BbsModule' },
     { path: 'library', data: { title: '资料中心' }, loadChildren: './library/library.module#LibraryModule' },
@@ -14,6 +17,9 @@ const routes: Routes = [
   ]}
 ];
 
+/**
+ * routing module for AppModule
+ */
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
