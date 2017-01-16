@@ -20,10 +20,6 @@ const md = new MarkdownIt();
 })
 export class AppComponent {
   /**
-   * title for foo.bar.john.doe
-   */
-  title = 'app works!';
-  /**
    * holds the html generated from app.md markdown file
    */
   htmlFromMarkdown = md.render(require('raw-loader!./app.md'));

@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BbsRoutingModule } from './bbs-routing.module';
-import { BbsComponent } from './bbs.component';
+import { BbsHomeComponent } from './bbs-home/bbs-home.component';
 
 @NgModule({
   imports: [
     CommonModule,
     BbsRoutingModule
   ],
-  declarations: [BbsComponent]
+  declarations: [BbsHomeComponent]
 })
 export class BbsModule { }
