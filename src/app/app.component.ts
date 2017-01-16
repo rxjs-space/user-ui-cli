@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+// import { MarkdownService as mds } from './shared/services'
 import * as MarkdownIt from 'markdown-it';
 /**
  * use `md.render(markdown in rawtext)` to generate html
@@ -19,6 +20,7 @@ const md = new MarkdownIt();
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
+  constructor() {}
   /**
    * holds the html generated from app.md markdown file
    */

@@ -6,7 +6,6 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./bbs-home.component.scss']
 })
 export class BbsHomeComponent implements OnInit {
-
   constructor() { }
 
   ngOnInit() {

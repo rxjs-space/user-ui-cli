@@ -1,0 +1,16 @@
+import { Component, OnInit } from '@angular/core';
+import { ThreadApi, Thread, BasePageComponent, matchById } from '../../shared';
+
+@Component({
+  selector: 'app-thread-nav',
+  templateUrl: './thread-nav.component.html',
+  styleUrls: ['./thread-nav.component.scss']
+})
+export class ThreadNavComponent implements OnInit {
+
+  constructor() { }
+
+  ngOnInit() {
+  }
+
+}

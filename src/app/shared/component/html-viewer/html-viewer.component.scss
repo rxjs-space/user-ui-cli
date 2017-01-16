@@ -1,0 +1,106 @@
+@import "../../styles/common";
+
+:host {
+  display: block;
+  /deep/ {
+    counter-reset: h2;
+    $indent-x: 1rem;
+    blockquote {
+      padding-left: $indent-x;
+      border-left: 2px solid $brand-primary;
+    }
+    svg {
+      max-width: 100%;
+    }
+    img {
+      max-width: 100%;
+    }
+    ul {
+      padding-left: $indent-x;
+      > li {
+        list-style-type: square;
+        > blockquote {
+          margin-left: (-$indent-x);
+        }
+        > p {
+          margin-bottom: 0.3rem;
+        }
+      }
+    }
+    ol {
+      padding-left: $indent-x;
+      > li {
+        > blockquote {
+          margin-left: (-$indent-x);
+        }
+      }
+    }
+    h1 {
+      // 不要显示内部的title
+      display: none;
+    }
+    h2, h3, h4, h5, h6 {
+      padding-bottom: 4px;
+    }
+    h2 {
+      font-size: 18px;
+      white-space: nowrap;
+      max-width: calc(100% - 15px);
+      text-overflow: ellipsis;
+      padding: 3px 1em 3px 1.3em;
+      border-radius: 0 15px 15px 0;
+      margin: 10px 0 10px 15px;
+      background: $brand-secondary;
+      color: white;
+      display: inline-block;
+      position: relative;
+    }
+    h2::before {
+      counter-increment: h2;
+      content: counter(h2);
+    }
+    h2::before {
+      position: absolute;
+      display: inline-block;
+      bottom: 0;
+      left: -15px;
+      width: 30px;
+      height: 30px;
+      line-height: 30px;
+      border-radius: 50%;
+      background: white;
+      border: 2px solid $brand-secondary;
+      color: $brand-secondary;
+      text-align: center;
+    }
+    h3, h4, h5, h6 {
+      font-size: 15px;
+    }
+    h3 {
+      color: $brand-primary;
+    }
+    h4, h5, h6 {
+      font-weight: normal;
+      color: $google-green;
+      margin: 0.5rem 0 0;
+    }
+    h2 {
+      counter-reset: h3;
+    }
+    h3 {
+      &::before {
+        counter-increment: h3;
+        content: counter(h3) '. ';
+      }
+    }
+    h3 {
+      counter-reset: h4;
+    }
+    h4 {
+      &::before {
+        counter-increment: h4;
+        content: counter(h3) '.' counter(h4) '. ';
+      }
+    }
+  }
+}

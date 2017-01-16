@@ -19,7 +19,7 @@ import { SharedModule } from './shared/shared.module';
     FormsModule,
     HttpModule,
     AppRoutingModule,
-    SharedModule
+    SharedModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]
