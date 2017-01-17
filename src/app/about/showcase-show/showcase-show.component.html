@@ -1,3 +1,9 @@
-<p>
-  showcase-show works!
-</p>
+<header>
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item">
+      <a routerLink="../">成功案例</a>
+    </li>
+    <li class="breadcrumb-item active">案例介绍</li>
+  </ol>
+</header>
+<app-showcase-details [item]="item|async"></app-showcase-details>

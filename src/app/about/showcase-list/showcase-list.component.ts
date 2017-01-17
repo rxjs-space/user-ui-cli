@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { MenuItem } from '../../shared';
 
 @Component({
   selector: 'app-showcase-list',
@@ -6,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./showcase-list.component.scss']
 })
 export class ShowcaseListComponent implements OnInit {
-
+  @Input() items: MenuItem[];
   constructor() { }
 
   ngOnInit() {
