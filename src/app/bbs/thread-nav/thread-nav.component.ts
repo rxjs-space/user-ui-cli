@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ThreadApi, Thread, BasePageComponent, matchById } from '../../shared';
+import { ThreadApi, Thread, BasePageComponent, matchById, SvgHolderService } from '../../shared';
 
 @Component({
   selector: 'app-thread-nav',
@@ -7,8 +7,7 @@ import { ThreadApi, Thread, BasePageComponent, matchById } from '../../shared';
   styleUrls: ['./thread-nav.component.scss']
 })
 export class ThreadNavComponent implements OnInit {
-
-  constructor() { }
+  constructor(private svgHolderService: SvgHolderService) { }
 
   ngOnInit() {
   }

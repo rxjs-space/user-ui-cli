@@ -9,7 +9,7 @@ import { ThreadListComponent } from './thread-list/thread-list.component';
 import { ThreadNavComponent } from './thread-nav/thread-nav.component';
 import { ThreadShowComponent } from './thread-show/thread-show.component';
 
-import { SharedModule } from '../shared/shared.module';
+import { SharedModule } from '../shared';
 
 @NgModule({
   imports: [

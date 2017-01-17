@@ -1,0 +1,49 @@
+@import "../../styles/common";
+
+:host {
+  display: block;
+  margin: 0 -1rem;
+}
+
+.list-group-item {
+  padding: 0.5rem 0.75rem;
+  border-left: none;
+  border-right: none;
+}
+
+.media-right {
+  vertical-align: middle;
+  color: $text-muted;
+  /deep/ svg {
+    width: 1.5em;
+    height: 1.5em;
+      path {
+      fill: currentColor;
+    }
+  }
+}
+
+
+.media-heading {
+  margin-bottom: 1rem;
+}
+
+.media-body {
+  p {
+    font-size: 0.9rem;
+    color: $text-muted;
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.media-left {
+  min-width: 80px;
+  .media-object {
+    margin: auto;
+  }
+}
+.icon {
+  font-size: 1.5rem;
+}
