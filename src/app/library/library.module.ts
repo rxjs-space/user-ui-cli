@@ -1,14 +1,16 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LibraryRoutingModule } from './library-routing.module';
-import { LibraryComponent } from './library.component';
-import { HomeComponent } from './home.component';
+import { LibraryHomeComponent } from './library-home/library-home.component';
+
+import { SharedModule } from '../shared';
 
 @NgModule({
   imports: [
     CommonModule,
-    LibraryRoutingModule
+    LibraryRoutingModule,
+    SharedModule
   ],
-  declarations: [LibraryComponent, HomeComponent]
+  declarations: [LibraryHomeComponent]
 })
 export class LibraryModule { }
