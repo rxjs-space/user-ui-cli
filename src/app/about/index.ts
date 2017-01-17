@@ -10,6 +10,6 @@ export { ShowcaseDetailsComponent } from './showcase-details/showcase-details.co
 export { ShowcaseListComponent } from './showcase-list/showcase-list.component';
 export { ShowcaseShowComponent } from './showcase-show/showcase-show.component';
 export { BookHomeComponent } from './book-home/book-home.component';
-export { BookDetailComponent } from './book-detail/book-detail.component';
+export { BookDetailsComponent } from './book-details/book-details.component';
 export { BookListComponent } from './book-list/book-list.component';
 export { BookShowComponent } from './book-show/book-show.component';

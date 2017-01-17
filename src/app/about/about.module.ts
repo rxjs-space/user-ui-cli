@@ -10,11 +10,11 @@ import { ShowcaseDetailsComponent } from './showcase-details/showcase-details.co
 import { ShowcaseListComponent } from './showcase-list/showcase-list.component';
 import { ShowcaseShowComponent } from './showcase-show/showcase-show.component';
 import { BookHomeComponent } from './book-home/book-home.component';
-import { BookDetailComponent } from './book-detail/book-detail.component';
 import { BookListComponent } from './book-list/book-list.component';
 import { BookShowComponent } from './book-show/book-show.component';
 
 import { SharedModule } from '../shared';
+import { BookDetailsComponent } from './book-details/book-details.component';
 
 @NgModule({
   imports: [
@@ -22,6 +22,8 @@ import { SharedModule } from '../shared';
     AboutRoutingModule,
     SharedModule
   ],
-  declarations: [AboutHomeComponent, AboutJoinComponent, AboutSiteComponent, AboutUsComponent, ShowcaseHomeComponent, ShowcaseDetailsComponent, ShowcaseListComponent, ShowcaseShowComponent, BookHomeComponent, BookDetailComponent, BookListComponent, BookShowComponent]
+  declarations: [AboutHomeComponent, AboutJoinComponent, AboutSiteComponent, AboutUsComponent, 
+  ShowcaseHomeComponent, ShowcaseDetailsComponent, ShowcaseListComponent, ShowcaseShowComponent, 
+  BookHomeComponent, BookListComponent, BookShowComponent, BookDetailsComponent]
 })
 export class AboutModule { }

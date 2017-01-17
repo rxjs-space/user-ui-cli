@@ -15,7 +15,7 @@ export class HtmlViewerComponent implements OnChanges, OnInit {
     // if (change.currentValue) {
     //   this.html = this.sanitizer.bypassSecurityTrustHtml(change.currentValue);
     // }
-    console.log(change);
+    // console.log(change);
     if (change.currentValue) {
       this.html = this.content;
     }

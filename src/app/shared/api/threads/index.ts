@@ -32,6 +32,7 @@ const items: Thread[] = [
   },
 ];
 
+
 @Injectable()
 export class ThreadApi {
   query(filter = 'all'): Observable<Thread> {

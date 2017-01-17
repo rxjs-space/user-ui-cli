@@ -1,3 +1,9 @@
-<p>
-  book-show works!
-</p>
+<header>
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item">
+      <a routerLink="..">图书推荐</a>
+    </li>
+    <li class="breadcrumb-item active">图书简介</li>
+  </ol>
+</header>
+<app-book-details [item]="item|async"></app-book-details>

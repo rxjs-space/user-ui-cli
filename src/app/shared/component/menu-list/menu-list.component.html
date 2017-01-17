@@ -3,8 +3,9 @@
     <div class="media">
       <div class="media-left">
         <!--<img [src]="item.icon|trustAsImgUrl" [alt]="item.title" class="media-object">-->
-        <!--there was a trustAsImgUrl pipe in original version-->
-        <img [src]="'assets/images/'+item.icon" [alt]="item.title" class="media-object">
+        <!--trustAsImgUrl pipe is for working with inline svg-->
+        <!--but since there's no loader in cli for inline svg, the pipe is not used here-->
+        <img [src]="item.icon" [alt]="item.title" class="media-object">
       </div>
       <div class="media-body">
         <h3 class="media-heading">
