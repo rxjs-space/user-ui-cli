@@ -3,8 +3,8 @@ import { Routes, RouterModule } from '@angular/router';
 
 import {
   AboutHomeComponent, AboutJoinComponent, AboutSiteComponent, AboutUsComponent,
-  ShowcaseHomeComponent, ShowcaseDetailsComponent, ShowcaseListComponent, ShowcaseShowComponent,
-  BookHomeComponent, BookDetailComponent, BookListComponent, BookShowComponent
+  ShowcaseHomeComponent, ShowcaseShowComponent,
+  BookHomeComponent, BookShowComponent
 } from './index';
 
 const routes: Routes = [
