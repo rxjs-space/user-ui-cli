@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { RoutingData, MenuItem } from '../../models';
+import { MenuItem } from '../../models';
 
 @Component({
   selector: 'app-list',
@@ -8,7 +8,7 @@ import { RoutingData, MenuItem } from '../../models';
 })
 export class ListComponent implements OnInit {
   @Input() items: any[];
-  @Input() secData: RoutingData;
+  @Input() secId: string;
   menuItems: MenuItem[];
   constructor() { }
 
@@ -16,7 +16,7 @@ export class ListComponent implements OnInit {
    * will map items to menuItems when necessary
    */
   ngOnInit() {
-    if (this.secData.secId === 'authors' ) {
+    if (this.secId === 'authors' ) {
       this.menuItems = this.items.map(author => ({
         icon: author.avatar,
         description: author.bio,

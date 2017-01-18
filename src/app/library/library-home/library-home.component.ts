@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuItem } from '../../shared';
+import { libraryConst } from '../library';
+
 @Component({
   selector: 'app-library-home',
   templateUrl: './library-home.component.html',
@@ -8,10 +10,10 @@ import { MenuItem } from '../../shared';
 export class LibraryHomeComponent implements OnInit {
   items: MenuItem[] = [
     {
-      title: '精品文章',
+      title: libraryConst.articles.secTitle,
       description: '技巧、实践、剖析、案例',
       icon: require('../_images/articles.svg'),
-      url: './article'
+      url: `./${libraryConst.articles.secId}`
     },
     {
       title: '技术专栏',
@@ -38,10 +40,10 @@ export class LibraryHomeComponent implements OnInit {
       url: './partner'
     },
     {
-      title: '特约作者',
+      title: libraryConst.authors.secTitle,
       description: '分享与成长',
       icon: require('../_images/writing.svg'),
-      url: './author'
+      url: `./${libraryConst.authors.secId}`
     }
 
   ];

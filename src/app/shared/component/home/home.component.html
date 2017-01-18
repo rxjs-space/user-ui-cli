@@ -1,7 +1,7 @@
 <header>
   <ol class="breadcrumb">
-    <li class="breadcrumb-item active">{{data?.sectionTitle}}</li>
+    <li class="breadcrumb-item active">{{data?.title}}</li>
   </ol>
 </header>
-<app-list [items]="itemsRx|async" [secData]="data"></app-list>
+<app-list [items]="itemsRx|async" [secId]="secId"></app-list>
 

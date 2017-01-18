@@ -4,7 +4,7 @@
   </div>
 </template>
 
-<ng-container *ngIf="secData.secId === 'articles'">
+<ng-container *ngIf="secId === 'articles'">
 
   <div class="list-group padding-h-neg">
     <template [ngTemplateOutlet]="nothingFound"></template>
@@ -18,7 +18,7 @@
 </ng-container>
 
 
-<ng-container *ngIf="secData.secId === 'authors'">
+<ng-container *ngIf="secId === 'authors'">
   <template [ngTemplateOutlet]="nothingFound"></template>
   <app-menu-list [items]="menuItems"></app-menu-list>
 </ng-container>

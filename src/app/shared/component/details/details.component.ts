@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { RoutingData } from '../../models';
+
 @Component({
   selector: 'app-details',
   templateUrl: './details.component.html',
@@ -7,7 +7,7 @@ import { RoutingData } from '../../models';
 })
 export class DetailsComponent implements OnInit {
   @Input() item: any;
-  @Input() secData: RoutingData;
+  @Input() secId: string;
   constructor() { }
 
   ngOnInit() {

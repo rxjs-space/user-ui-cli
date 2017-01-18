@@ -1,4 +1,4 @@
-<div *ngIf="secData.secId === 'articles'" class="articl-detail">
+<div *ngIf="secId === 'articles'" class="articl-detail">
   <h2>{{item.title}}</h2>
 
   <p>
@@ -62,7 +62,7 @@
 
 
 
-<div *ngIf="secData.secId === 'authors'" class="author-detail">
+<div *ngIf="secId === 'authors'" class="author-detail">
   <div class="card">
     <img class="img-circle" [src]="item.avatar">
     <div class="card-block">

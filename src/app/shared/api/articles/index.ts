@@ -459,7 +459,13 @@ export const items: Article[] = [
   }
 ];
 
-
+export const notFound = {
+    id: '404',
+    title: '404',
+    content: null,
+    tags: ['404'],
+    authors: ['404']
+  }
 
 /**
  * the fake query will filter the array, if nothing found, there will be an empty array

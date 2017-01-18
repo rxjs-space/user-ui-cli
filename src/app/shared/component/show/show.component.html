@@ -1,12 +1,12 @@
 <header>
   <ol class="breadcrumb">
     <li class="breadcrumb-item">
-      <a routerLink="../">{{data?.upperSectionTitle}}</a>
+      <a routerLink="../">{{secTitle}}</a>
     </li>
-    <li class="breadcrumb-item active">{{data?.sectionTitle}}</li>
+    <li class="breadcrumb-item active">{{data?.title}}</li>
   </ol>
 </header>
 
 
 <!--{{this.itemRx | async | json}}-->
-<app-details [item]="itemRx|async" [secData]="data"></app-details>
+<app-details [item]="itemRx|async" [secId]="secId"></app-details>
