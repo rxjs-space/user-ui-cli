@@ -10,7 +10,14 @@ const articleHomeRoutingData: RoutingData = {
 const articleShowRoutingData: RoutingData = {
   id: 'articles', sectionTitle: '文章内容',
   upperSectionTitle: articleHomeRoutingData.sectionTitle
-}
+};
+const authorHomeRoutingData: RoutingData = {
+  id: 'articles', sectionTitle: '特约作者'
+};
+const authorShowRoutingData: RoutingData = {
+  id: 'articles', sectionTitle: '作者详情',
+  upperSectionTitle: authorHomeRoutingData.sectionTitle
+};
 
 
 const routes: Routes = [
@@ -18,7 +25,11 @@ const routes: Routes = [
   { path: 'article', children: [
     { path: '', data: articleHomeRoutingData, pathMatch: 'full', component: HomeComponent },
     { path: ':id', data: articleShowRoutingData, pathMatch: 'full', component: ShowComponent },
-  ]}
+  ]},
+  // { path: 'author', children: [
+  //   {path: '', pathMatch: 'full', component: HomeComponent},
+  //   {path: ':id', pathMatch: 'full', component: ShowComponent},
+  // ]}
 ];
 
 @NgModule({
