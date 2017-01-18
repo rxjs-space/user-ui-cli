@@ -50,7 +50,7 @@ export class ShowComponent implements OnInit {
             combo.item.content = combo.html; break;
           case 'authors':
             combo.item.description = combo.html;
-            combo.item.avatar = 'https://raw.githubusercontent.com/angular-bbs/user-ui/master/src/app/_shared/api/authors/_images/' + combo.item.avatar
+            combo.item.avatar = 'https://raw.githubusercontent.com/angular-bbs/user-ui/master/src/app/_shared/api/authors/' + combo.item.avatar
             break;
         }
         return combo.item;

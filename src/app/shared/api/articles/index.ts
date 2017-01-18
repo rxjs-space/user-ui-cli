@@ -1,6 +1,6 @@
-import {Injectable} from '@angular/core';
-import {Article} from '../../models/article';
-import {Observable} from 'rxjs/Observable';
+import { Injectable } from '@angular/core';
+import { Article } from '../../models/article';
+import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 
 export const items: Article[] = [

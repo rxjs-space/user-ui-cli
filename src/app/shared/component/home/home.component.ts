@@ -38,7 +38,7 @@ export class HomeComponent implements OnInit {
           case 'authors':
             processedItems = items.map(item => Object.assign(
               {}, item, {
-                avatar: 'https://raw.githubusercontent.com/angular-bbs/user-ui/master/src/app/_shared/api/authors/_images/' + item.avatar
+                avatar: 'https://raw.githubusercontent.com/angular-bbs/user-ui/master/src/app/_shared/api/authors/' + item.avatar
               }
             ));
             break;
