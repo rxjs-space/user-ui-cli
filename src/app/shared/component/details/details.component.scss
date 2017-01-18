@@ -36,11 +36,11 @@ blockquote {
     }
     &::before {
       left: 0;
-      background: url(./_images/chevron-left.svg) no-repeat left center;
+      background: url(assets/images/icons/chevron-left-muted.svg) no-repeat left center;
     }
     &::after {
       right: 0;
-      background: url(./_images/chevron-right.svg) no-repeat right center;
+      background: url(assets/images/icons/chevron-right-muted.svg) no-repeat right center;
     }
   }
   p {

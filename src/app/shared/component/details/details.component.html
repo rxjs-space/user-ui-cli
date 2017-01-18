@@ -4,11 +4,11 @@
   <a *ngFor="let author of item.authors" [routerLink]="['/library/author', author]">{{author}}</a>
   <a *ngFor="let translator of item.translators"
      [routerLink]="['/library/author', translator]">[译]{{translator}}</a>
-  <label *ngIf="item.translation">译作</label>
-  <label *ngIf="item.exclusive">独家</label>
-  <label *ngIf="item.first">首发</label>
-  <label *ngIf="!item.forward">原创</label>
-  <label *ngIf="item.forward">转载</label>
+  <span *ngIf="item.translation">译作</span>
+  <span *ngIf="item.exclusive">独家</span>
+  <span *ngIf="item.first">首发</span>
+  <span *ngIf="!item.forward">原创</span>
+  <span *ngIf="item.forward">转载</span>
 </p>
 
 <p *ngIf="item.originalUrl">
@@ -29,7 +29,7 @@
 <footer>
   <div class="media">
     <div class="media-left">
-      <img src="../_images/wechat.jpg" alt="微信二维码" class="media-object">
+      <img src="assets/images/wechat.jpg" alt="微信二维码" class="media-object">
     </div>
     <div class="media-body">
       <h4 class="media-heading">
