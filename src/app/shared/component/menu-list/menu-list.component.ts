@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Data } from '@angular/router';
+// import { Data } from '@angular/router';
 import { MenuItem } from '../../models';
 import { SvgHolderService } from '../../services';
 @Component({
@@ -9,7 +9,7 @@ import { SvgHolderService } from '../../services';
 })
 export class MenuListComponent implements OnInit {
   @Input() items: MenuItem[];
-  @Input() secData: Data;
+  @Input() secData: any;
   constructor(private svgHolderService: SvgHolderService) { }
 
   ngOnInit() {
