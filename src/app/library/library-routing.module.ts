@@ -4,18 +4,21 @@ import { Routes, RouterModule } from '@angular/router';
 import { LibraryHomeComponent } from './library-home/library-home.component';
 import { HomeComponent, ShowComponent, RoutingData } from '../shared';
 
+const articlesSecId = 'articles';
 const articleHomeRoutingData: RoutingData = {
-  id: 'articles', sectionTitle: '精品文章'
+  secId: articlesSecId, sectionTitle: '精品文章'
 };
 const articleShowRoutingData: RoutingData = {
-  id: 'articles', sectionTitle: '文章内容',
+  secId: articlesSecId, sectionTitle: '文章内容',
   upperSectionTitle: articleHomeRoutingData.sectionTitle
 };
+
+const authorsSecId = 'authors';
 const authorHomeRoutingData: RoutingData = {
-  id: 'articles', sectionTitle: '特约作者'
+  secId: authorsSecId, sectionTitle: '特约作者'
 };
 const authorShowRoutingData: RoutingData = {
-  id: 'articles', sectionTitle: '作者详情',
+  secId: authorsSecId, sectionTitle: '作者详情',
   upperSectionTitle: authorHomeRoutingData.sectionTitle
 };
 
@@ -26,10 +29,10 @@ const routes: Routes = [
     { path: '', data: articleHomeRoutingData, pathMatch: 'full', component: HomeComponent },
     { path: ':id', data: articleShowRoutingData, pathMatch: 'full', component: ShowComponent },
   ]},
-  // { path: 'author', children: [
-  //   {path: '', pathMatch: 'full', component: HomeComponent},
-  //   {path: ':id', pathMatch: 'full', component: ShowComponent},
-  // ]}
+  { path: 'author', children: [
+    {path: '', data: authorHomeRoutingData, pathMatch: 'full', component: HomeComponent},
+    {path: ':id', data: authorShowRoutingData, pathMatch: 'full', component: ShowComponent},
+  ]}
 ];
 
 @NgModule({

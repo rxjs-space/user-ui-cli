@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/switchMap';
+import 'rxjs/add/operator/map';
 
 import { RoutingData } from '../../models';
 import { ApiService } from '../../api';
@@ -20,8 +21,9 @@ export class HomeComponent implements OnInit {
     private api: ApiService) { }
 
   /**
-   * after component init, get the route.data first,
+   * after component init, get the routingData first,
    * then switchMap to route.params and query the api
+   * after getting the items, transform the items if necessary
    */
   ngOnInit() {
     this.itemsRx = this.activatedRoute.data
@@ -29,6 +31,21 @@ export class HomeComponent implements OnInit {
           this.data = data;
           return this.activatedRoute.params;
       })
-      .switchMap(params => this.api[this.data.id].query(params));
+      .switchMap(params => this.api[this.data.secId].query(params))
+      .map((items: any[]) => {
+        let processedItems;
+        switch (this.data.secId) {
+          case 'authors':
+            processedItems = items.map(item => Object.assign(
+              {}, item, {
+                avatar: 'https://raw.githubusercontent.com/angular-bbs/user-ui/master/src/app/_shared/api/authors/_images/' + item.avatar
+              }
+            ));
+            break;
+          default:
+            processedItems = items;
+        }
+        return processedItems;
+      });
   }
 }

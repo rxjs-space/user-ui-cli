@@ -1,58 +1,83 @@
-<h2>{{item.title}}</h2>
+<div *ngIf="secData.secId === 'articles'" class="articl-detail">
+  <h2>{{item.title}}</h2>
 
-<p>
-  <a *ngFor="let author of item.authors" [routerLink]="['/library/author', author]">{{author}}</a>
-  <a *ngFor="let translator of item.translators"
-     [routerLink]="['/library/author', translator]">[译]{{translator}}</a>
-  <span *ngIf="item.translation">译作</span>
-  <span *ngIf="item.exclusive">独家</span>
-  <span *ngIf="item.first">首发</span>
-  <span *ngIf="!item.forward">原创</span>
-  <span *ngIf="item.forward">转载</span>
-</p>
+  <p>
+    <a *ngFor="let author of item.authors" [routerLink]="['/library/author', author]">{{author}}</a>
+    <a *ngFor="let translator of item.translators"
+      [routerLink]="['/library/author', translator]">[译]{{translator}}</a>
+    <span *ngIf="item.translation">译作</span>
+    <span *ngIf="item.exclusive">独家</span>
+    <span *ngIf="item.first">首发</span>
+    <span *ngIf="!item.forward">原创</span>
+    <span *ngIf="item.forward">转载</span>
+  </p>
 
-<p *ngIf="item.originalUrl">
-  <a [href]="item.originalUrl">点此查看原文</a>
-</p>
+  <p *ngIf="item.originalUrl">
+    <a [href]="item.originalUrl">点此查看原文</a>
+  </p>
 
-<blockquote>
-  <app-html-viewer *ngIf="item.summary" [content]="item.summary"></app-html-viewer>
-</blockquote>
+  <blockquote>
+    <app-html-viewer *ngIf="item.summary" [content]="item.summary"></app-html-viewer>
+  </blockquote>
 
-<!-- show spinner while loading content -->
-<div *ngIf="!item.content">
-  <img style="margin: 20px auto; display: block;" src="assets/images/rolling.svg" alt="spinner">
-</div>
+  <!-- show spinner while loading content -->
+  <div *ngIf="!item.content">
+    <img style="margin: 20px auto; display: block;" src="assets/images/rolling.svg" alt="spinner">
+  </div>
 
-<app-html-viewer [content]="item.content"></app-html-viewer>
+  <app-html-viewer [content]="item.content"></app-html-viewer>
 
-<footer>
-  <div class="media">
-    <div class="media-left">
-      <img src="assets/images/wechat.jpg" alt="微信二维码" class="media-object">
+  <footer>
+    <div class="media">
+      <div class="media-left">
+        <img src="assets/images/wechat.jpg" alt="微信二维码" class="media-object">
+      </div>
+      <div class="media-body">
+        <h4 class="media-heading">
+          Angular中文社区<br/>
+          agnularcn
+        </h4>
+        <p>
+          长按识别二维码关注我们
+          <br/>
+          或拷贝
+          <a href="https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=MzI5MDM2NjY5Nw==&scene=110#wechat_redirect">
+            这个链接
+          </a>
+          推荐我们
+        </p>
+      </div>
+
     </div>
-    <div class="media-body">
-      <h4 class="media-heading">
-        Angular中文社区<br/>
-        agnularcn
-      </h4>
-      <p>
-        长按识别二维码关注我们
-        <br/>
-        或拷贝
-        <a href="https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=MzI5MDM2NjY5Nw==&scene=110#wechat_redirect">
-          这个链接
-        </a>
-        推荐我们
+    <hr/>
+    <div>
+      我们属于谷歌开发技术推广部，
+      <a href="https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=MzAwODY4OTk2Mg==&scene=110#wechat_redirect">
+        点此关注
+      </a>
+    </div>
+  </footer>
+</div>
+  
+
+
+
+<div *ngIf="secData.secId === 'authors'" class="author-detail">
+  <div class="card">
+    <img class="img-circle" [src]="item.avatar">
+    <div class="card-block">
+      <h2 class="card-title">
+        {{item.name}}
+      </h2>
+      <h3 class="card-title text-primary">{{item.bio}}</h3>
+      <app-html-viewer class="card-text" [content]="item.description"></app-html-viewer>
+      <hr/>
+      <p class="text-xs-center">
+        <a [href]="item.homepage" target="_blank">主页</a>
+        <a [routerLink]="['/library/column', {item: item.id}]">专栏</a>
+        <a [routerLink]="['/library/article', {item: item.id}]">文章</a>
+        <a [routerLink]="['/library/book', {item: item.id}]">书籍</a>
       </p>
     </div>
-
   </div>
-  <hr/>
-  <div>
-    我们属于谷歌开发技术推广部，
-    <a href="https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=MzAwODY4OTk2Mg==&scene=110#wechat_redirect">
-      点此关注
-    </a>
-  </div>
-</footer>
+</div>

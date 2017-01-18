@@ -36,7 +36,14 @@ export class LibraryHomeComponent implements OnInit {
       description: '与我们并肩作战的友军站点',
       icon: require('../_images/external.svg'),
       url: './partner'
+    },
+    {
+      title: '特约作者',
+      description: '分享与成长',
+      icon: require('../_images/writing.svg'),
+      url: './author'
     }
+
   ];
   constructor() { }
 

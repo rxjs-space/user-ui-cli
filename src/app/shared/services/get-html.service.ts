@@ -5,6 +5,8 @@ import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/startWith';
 
+import { Article, Author } from '../models';
+
 /**
  * It's inconvenient to install webpack loaders in a angular-cli powered project.
  * So it's difficult to render markdowns in-house, especially with pictures in markdowns.
@@ -36,32 +38,64 @@ export class GetHtmlService {
    * this map will cache the htmls
    */
   htmlCacheMap: Map<folder, html> = new Map();
+  githubUsernameReponame = 'angular-bbs/user-ui';
+  secPaths = {
+    articles: 'src/app/_shared/api/articles',
+    authors: 'src/app/_shared/api/authors'
+  }
   constructor(private http: Http) { }
   /**
-   * fetch the html rendered by github and process img:src and a:href
+   * try find data in cache, if none, execute far (short for 'fetchAndReplace')
    */
-  fetchAndReplace(folder: string): Observable<html> {
-    const cached = this.htmlCacheMap.get(folder);
+  fetchAndReplace(secId: string, item: any): Observable<html> {
+    let mapKey = '';
+    switch (secId) {
+      case 'articles': mapKey = item.folder; break;
+      case 'authors': mapKey = item.description; break;
+    }
+    const cached = this.htmlCacheMap.get(mapKey);
     if (cached) {
       return Observable.of(cached);
     } else {
-      const headers = new Headers({'Accept': 'application/vnd.github.v3.html+json'});
-      const options = new RequestOptions({ headers });
-      const apiUrl = `https://api.github.com/repos/angular-bbs/user-ui/contents/src/app/_shared/api/articles/${folder}/_index.md?ref=master`;
+      return this.executeFar(secId, mapKey);
+    }
+  }
 
-      return this.http.get(apiUrl, options)
-        .map(res => res.text())
-        .map(html => {
-          const pathPrefix = `https://raw.githubusercontent.com/angular-bbs/user-ui/master/src/app/_shared/api/articles/${folder}/`;
-          const processedHtml = html
-            .replace(/src=\"\.(.+?)\"/g, `src=\"${pathPrefix}\$1\"`)
-            .replace(/href=\"\.(.+?)\"/g, `href=\"${pathPrefix}\$1\"`);
-          this.htmlCacheMap.set(folder, processedHtml);
-          return processedHtml;
-        })
-        .startWith(''); // in detail page, spinner will show on empty string
+  /**
+   * do the actual work
+   * fetch the html rendered by github and process img:src and a:href
+   */
+  executeFar(secId: string, mapKey: string) {
+    const headers = new Headers({'Accept': 'application/vnd.github.v3.html+json'});
+    const options = new RequestOptions({ headers });
+
+    let apiUrl, pathPrefix;
+    switch (secId) {
+      case 'articles':
+        apiUrl =
+          `https://api.github.com/repos/${this.githubUsernameReponame}/contents/${this.secPaths.articles}/${mapKey}/_index.md?ref=master`;
+        pathPrefix =
+          `https://raw.githubusercontent.com/${this.githubUsernameReponame}/master/${this.secPaths.articles}/${mapKey}/`;
+        break;
+      case 'authors':
+        apiUrl =
+          `https://api.github.com/repos/${this.githubUsernameReponame}/contents/${this.secPaths.authors}/${mapKey}?ref=master`;
+        pathPrefix =
+          `https://raw.githubusercontent.com/${this.githubUsernameReponame}/master/${this.secPaths.authors}/_images/`;
+        break;
     }
 
+
+    return this.http.get(apiUrl, options)
+      .map(res => res.text())
+      .map(html => {
+        const processedHtml = html
+          .replace(/src=\"\.(.+?)\"/g, `src=\"${pathPrefix}\$1\"`)
+          .replace(/href=\"\.(.+?)\"/g, `href=\"${pathPrefix}\$1\"`);
+        this.htmlCacheMap.set(mapKey, processedHtml);
+        return processedHtml;
+      })
+      .startWith(''); // in detail page, spinner will show on empty string
   }
 
 }

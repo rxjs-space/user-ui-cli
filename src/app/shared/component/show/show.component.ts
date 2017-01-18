@@ -21,27 +21,50 @@ export class ShowComponent implements OnInit {
     private api: ApiService,
     private getHtml: GetHtmlService) { }
 
+  /**
+   * get the html for the item from github, based on data.secId
+   */
   ngOnInit() {
     this.itemRx = this.activatedRoute.data
       .switchMap((data: RoutingData) => {
         this.data = data;
         return this.activatedRoute.params;
       })
-      .switchMap(params => this.api[this.data.id].query(params)) // the 'params' contains id, then filter by id
+      .switchMap(params => this.api[this.data.secId].query(params)) // the 'params' contains id, then filter by id
       .map(items => items[0]) // map the array of 1 item to item
-      .do((item: {title: string}) => {
-        // console.log(item);
-        document.title = `${item.title} - Angular中文社区`;
+      .do((item: {title?: string, name?: string}) => {
+        this.setDocumentTitle(this.data.secId, item);
       })
       .switchMap(item => {
-        return this.getHtml.fetchAndReplace(item.folder); // go get the html rendered by github
-      }, (item, html) => ({item, html}))
+        // console.log(item);
+        // go get the html rendered by github
+        return this.getHtml.fetchAndReplace(this.data.secId, item);
+      }, (item, html) => ({
+        item: Object.assign({}, item),
+        html
+      }))
       .map(combo => {
         // console.log(combo);
-        combo.item.content = combo.html;
+        switch (this.data.secId) {
+          case 'articles':
+            combo.item.content = combo.html; break;
+          case 'authors':
+            combo.item.description = combo.html;
+            combo.item.avatar = 'https://raw.githubusercontent.com/angular-bbs/user-ui/master/src/app/_shared/api/authors/_images/' + combo.item.avatar
+            break;
+        }
         return combo.item;
       })
 
+  }
+
+  setDocumentTitle(secId, item: {title?: string, name?: string}) {
+    switch (secId) {
+      case 'articles':
+        document.title = `${item.title} - Angular中文社区`; break;
+      case 'authors':
+        document.title = `${item.name} - 作者 - Angular中文社区`; break;
+    }
   }
 
 }
