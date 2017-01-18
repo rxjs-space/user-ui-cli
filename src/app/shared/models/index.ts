@@ -7,3 +7,4 @@ export { MenuItem } from './menu-item';
 export { Partner } from './partner';
 export { Showcase } from './showcase';
 export { Thread } from './thread';
+export { RoutingData } from './routing-data';

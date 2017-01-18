@@ -28,4 +28,5 @@ export interface Article {
   originalUrl?: string;
   /** 是否隐藏 */
   hidden?: boolean;
+  folder?: string;
 }

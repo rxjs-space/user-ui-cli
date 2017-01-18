@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
+import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/switchMap';
 
-interface RoutingData {
-  title: string;
-  api: any;
-  reload: any;
-}
+import { RoutingData } from '../../models';
+import { ApiService } from '../../api';
+
 
 @Component({
   selector: 'app-home',
@@ -14,20 +13,22 @@ interface RoutingData {
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
+  itemsRx: Observable<any[]>;
+  data: RoutingData;
   constructor(
-    protected activatedRoute: ActivatedRoute) { }
+    private activatedRoute: ActivatedRoute,
+    private api: ApiService) { }
 
   /**
    * after component init, get the route.data first,
    * then switchMap to route.params and query the api
    */
   ngOnInit() {
-    this.activatedRoute.data
-      .switchMap(
-        () => this.activatedRoute.params,
-        (data: RoutingData, params) => ({data, params})
-      )
-      .switchMap(combo => combo.data.api.query(combo.params))
-      .subscribe(console.log);
+    this.itemsRx = this.activatedRoute.data
+      .switchMap((data: RoutingData) => {
+          this.data = data;
+          return this.activatedRoute.params;
+      })
+      .switchMap(params => this.api[this.data.id].query(params));
   }
 }

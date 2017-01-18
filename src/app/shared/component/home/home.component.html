@@ -1,3 +1,7 @@
-<p>
-  home works!
-</p>
+<header>
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item active">{{data?.sectionTitle}}</li>
+  </ol>
+</header>
+<app-list [items]="itemsRx|async"></app-list>
+

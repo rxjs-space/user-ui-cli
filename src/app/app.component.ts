@@ -25,5 +25,6 @@ export class AppComponent {
    * holds the html generated from app.md markdown file
    */
   htmlFromMarkdown = md.render(require('raw-loader!./app.md'));
+  // htmlFromMarkdown = require('markdown-it-loader!raw-loader!./app.md');
 }
 

@@ -1,0 +1,58 @@
+<h2>{{item.title}}</h2>
+
+<p>
+  <a *ngFor="let author of item.authors" [routerLink]="['/library/author', author]">{{author}}</a>
+  <a *ngFor="let translator of item.translators"
+     [routerLink]="['/library/author', translator]">[译]{{translator}}</a>
+  <label *ngIf="item.translation">译作</label>
+  <label *ngIf="item.exclusive">独家</label>
+  <label *ngIf="item.first">首发</label>
+  <label *ngIf="!item.forward">原创</label>
+  <label *ngIf="item.forward">转载</label>
+</p>
+
+<p *ngIf="item.originalUrl">
+  <a [href]="item.originalUrl">点此查看原文</a>
+</p>
+
+<blockquote>
+  <app-html-viewer *ngIf="item.summary" [content]="item.summary"></app-html-viewer>
+</blockquote>
+
+<!-- show spinner while loading content -->
+<div *ngIf="!item.content">
+  <img style="margin: 20px auto; display: block;" src="assets/images/rolling.svg" alt="spinner">
+</div>
+
+<app-html-viewer [content]="item.content"></app-html-viewer>
+
+<footer>
+  <div class="media">
+    <div class="media-left">
+      <img src="../_images/wechat.jpg" alt="微信二维码" class="media-object">
+    </div>
+    <div class="media-body">
+      <h4 class="media-heading">
+        Angular中文社区<br/>
+        agnularcn
+      </h4>
+      <p>
+        长按识别二维码关注我们
+        <br/>
+        或拷贝
+        <a href="https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=MzI5MDM2NjY5Nw==&scene=110#wechat_redirect">
+          这个链接
+        </a>
+        推荐我们
+      </p>
+    </div>
+
+  </div>
+  <hr/>
+  <div>
+    我们属于谷歌开发技术推广部，
+    <a href="https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=MzAwODY4OTk2Mg==&scene=110#wechat_redirect">
+      点此关注
+    </a>
+  </div>
+</footer>
