@@ -36,21 +36,6 @@ export class HomeComponent implements OnInit {
         return this.route.params;
       })
       .switchMap(params => this.api.apis[this.secId].query(this.data.items, params))
-      .map((items: any[]) => {
-        let processedItems;
-        switch (this.secId) {
-          case 'authors':
-          case 'columns':
-            processedItems = items.map(item => Object.assign(
-              {}, item, {
-                avatar: `https://raw.githubusercontent.com/angular-bbs/user-ui/master/src/app/_shared/api/${this.secId}/${item.avatar}`
-              }
-            ));
-            break;
-          default:
-            processedItems = items;
-        }
-        return processedItems;
-      });
+
   }
 }

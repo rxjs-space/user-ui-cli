@@ -35,25 +35,12 @@ type html = string;
 @Injectable()
 export class FetchGithubService {
 
-  /**
-   * for constructing urls to github and other purposes, like:
-   * https://raw.githubusercontent.com/rxjs-space/user-ui-api/master/${secData.articles.secId}/index.json
-   */
-  secData = {
-    articles: {
-      secId: 'articles'
-    }
-  };
+
   /**
    * this map will cache the htmls
    */
   private cache: Map<mapKey, html> = new Map();
-  githubUsernameReponame = 'angular-bbs/user-ui';
-  secPaths = {
-    articles: 'src/app/_shared/api/articles',
-    authors: 'src/app/_shared/api/authors',
-    columns: 'src/app/_shared/api/columns',
-  }
+
   constructor(
     private http: Http,
     @Inject(API_CONFIG) private apiConfig: ApiConfig,
@@ -92,15 +79,11 @@ export class FetchGithubService {
     switch (secId) {
       case this.api.apis.articles.secId:
         apiUrl = this.apiUrl(secId, mapKey);
-          // `https://api.github.com/repos/${this.githubUsernameReponame}/contents/${this.secPaths.articles}/${mapKey}?ref=master`;
-        pathPrefix = this.rawUrl(secId, `${mapKey}/`);
-          // `https://raw.githubusercontent.com/${this.githubUsernameReponame}/master/${this.secPaths.articles}/${mapKey}/`;
+        pathPrefix = this.rawUrl2(secId, `${mapKey}/`).replace(/_index.md/, ''); // article.content has '_index.md' at the end
         break;
       case this.api.apis.authors.secId:
-        apiUrl =
-          `https://api.github.com/repos/${this.githubUsernameReponame}/contents/${this.secPaths.authors}/${mapKey}?ref=master`;
-        pathPrefix = this.rawUrl(secId, '/_images/');
-          // `https://raw.githubusercontent.com/${this.githubUsernameReponame}/master/${this.secPaths.authors}/_images/`;
+        apiUrl = this.apiUrl(secId, mapKey);
+        pathPrefix = this.rawUrl2(secId, '/_images/');
         break;
     }
 
@@ -117,14 +100,13 @@ export class FetchGithubService {
       .startWith(''); // in detail page, spinner will show on empty string
   }
 
-  rawUrl(secId: string, filePath: string) {
-    return `https://raw.githubusercontent.com/${this.githubUsernameReponame}/master/${this.secPaths[secId]}/${filePath}`;
-  }
-
+   /**
+   * this is the url to get the html rendered from markdonw by github
+   * example: https://api.github.com/repos/rxjs-space/user-ui-api/contents/articles/${mapKey}?ref=master`;
+   */
   apiUrl(secId: string, filePath: string) {
     const userNameAndRepoName = `${this.apiConfig.githubUsername}/${this.apiConfig.apiRepoName}`;
     return `https://api.github.com/repos/${userNameAndRepoName}/contents/${this.apiConfig.pathToApi}/${secId}/${filePath}?ref=master`;
-    // https://api.github.com/repos/rxjs-space/user-ui-api/contents/articles/${mapKey}?ref=master`;
   }
 
   /**
@@ -136,6 +118,9 @@ export class FetchGithubService {
     return `https://raw.githubusercontent.com/${userNameAndRepoName}/master/${this.apiConfig.pathToApi}/${secId}/${filePath}`;
   }
 
+  /**
+   * fetch json from github and replace relative path with rawUrl where necessary
+   */
   fetchJson(secId: string) {
     const rawUrl = this.rawUrl2(secId, 'index.json');
     const itemsCached = this.cache.get(secId);
@@ -143,7 +128,15 @@ export class FetchGithubService {
       return Observable.of(itemsCached);
     } else {
       return this.http.get(rawUrl)
-        .map(res => res.json())
+        .map(res => { // for author.avatar or column.avatar, replace relative path with rawUrl
+          if (secId === 'authors' || secId === 'columns') {
+            return res.json().map(item => Object.assign({}, item, {
+                avatar: this.rawUrl2(secId, item.avatar)
+            }));
+          } else {
+            return res.json();
+          }
+        })
         .do(items => this.cache.set(secId, items));
     }
 
