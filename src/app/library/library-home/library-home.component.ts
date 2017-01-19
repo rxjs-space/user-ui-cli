@@ -16,10 +16,10 @@ export class LibraryHomeComponent implements OnInit {
       url: `./${libraryConst.articles.secId}`
     },
     {
-      title: '技术专栏',
+      title: libraryConst.columns.secTitle,
       description: '由一线技术专家撰写的专栏',
       icon: require('../_images/professional.svg'),
-      url: './column'
+      url: `./${libraryConst.columns.secId}`
     },
     {
       title: '前沿观察',

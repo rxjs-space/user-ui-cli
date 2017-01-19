@@ -1,6 +1,6 @@
 <template #nothingFound>
   <div class="alert alert-info" *ngIf="!items?.length">
-    没有找到符合条件的作者
+    没有找到符合条件的记录
   </div>
 </template>
 
@@ -18,7 +18,7 @@
 </ng-container>
 
 
-<ng-container *ngIf="secId === 'authors'">
+<ng-container *ngIf="isAuthorsOrColumns">
   <template [ngTemplateOutlet]="nothingFound"></template>
   <app-menu-list [items]="menuItems"></app-menu-list>
 </ng-container>

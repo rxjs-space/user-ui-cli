@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { Author } from '../../models/author';
+import { Author } from '../models';
+import { GetHtmlService } from '../services';
 
-export const items: Author[] = [
+const items: Author[] = [
   {
     id: '雪狼',
     name: '雪狼',
@@ -104,18 +105,58 @@ export const items: Author[] = [
   }
 ];
 
+const notFound: Author =   {
+    id: '404',
+    name: '404',
+    bio: 'always exploring',
+    description: 'born with the web',
+    avatar: './_images/Tim刘.png',
+    columnist: false,
+    homepage: '/'
+  };
+
 /**
  * fake query for author[s]
  * `library/author/{author.id}` will lead to the author page with the id
  * if there is no user with that id, will also filter author.name
  * if no id params passed, will return full list of authors
+ * 
+ * use type any, because this fac will also be used in other api
  */
-export function queryFac(itemsX: Author[]) {
-  return function(params: {id?: string}): Observable<Author[]> {
+function queryFac(itemsX: any[]) {
+  return function(params: {id?: string}): Observable<any[]> {
     const filteredItems = itemsX
       .filter(item =>
         !params.id || ((item.id === params.id) || (item.name === params.id))
       );
     return Observable.of(filteredItems);
   };
+}
+
+
+
+@Injectable()
+export class AuthorsApi {
+  secId = 'authors';
+  /**
+   * item.avatar: user input relative path to api folder at github, 
+   * we will convert the relative path to the rawUrl at github
+   */
+  private items = items.map(item => Object.assign({}, item, {
+    avatar: this.ghs.rawUrl(this.secId, item.avatar)
+  }));
+  public notFound = notFound;
+  public query = this.queryFac(this.items);
+  constructor(private ghs: GetHtmlService) {}
+
+  private queryFac(itemsX: any[]) {
+    return function(params: {id?: string}): Observable<any[]> {
+      const filteredItems = itemsX
+        .filter(item =>
+          !params.id || ((item.id === params.id) || (item.name === params.id))
+        );
+      return Observable.of(filteredItems);
+    };
+  }
+
 }

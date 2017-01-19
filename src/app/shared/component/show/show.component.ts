@@ -50,7 +50,7 @@ export class ShowComponent implements OnInit {
       .switchMap(item => {
         // console.log(item);
         if (item.id === '404') {
-          return Observable.of('<p>找到个404</p>');
+          return Observable.of('<p>找到个404</p>'); // this will be the html for 404
         } else {
           // go get the html rendered by github
           return this.getHtml.fetchAndReplace(this.secId, item);

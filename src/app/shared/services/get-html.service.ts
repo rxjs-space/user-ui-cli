@@ -39,7 +39,8 @@ export class GetHtmlService {
   githubUsernameReponame = 'angular-bbs/user-ui';
   secPaths = {
     articles: 'src/app/_shared/api/articles',
-    authors: 'src/app/_shared/api/authors'
+    authors: 'src/app/_shared/api/authors',
+    columns: 'src/app/_shared/api/columns',
   }
   constructor(private http: Http) { }
   /**
@@ -72,14 +73,14 @@ export class GetHtmlService {
       case 'articles':
         apiUrl =
           `https://api.github.com/repos/${this.githubUsernameReponame}/contents/${this.secPaths.articles}/${mapKey}/_index.md?ref=master`;
-        pathPrefix =
-          `https://raw.githubusercontent.com/${this.githubUsernameReponame}/master/${this.secPaths.articles}/${mapKey}/`;
+        pathPrefix = this.rawUrl(secId, `${mapKey}/`);
+          // `https://raw.githubusercontent.com/${this.githubUsernameReponame}/master/${this.secPaths.articles}/${mapKey}/`;
         break;
       case 'authors':
         apiUrl =
           `https://api.github.com/repos/${this.githubUsernameReponame}/contents/${this.secPaths.authors}/${mapKey}?ref=master`;
-        pathPrefix =
-          `https://raw.githubusercontent.com/${this.githubUsernameReponame}/master/${this.secPaths.authors}/_images/`;
+        pathPrefix = this.rawUrl(secId, '/_images/');
+          // `https://raw.githubusercontent.com/${this.githubUsernameReponame}/master/${this.secPaths.authors}/_images/`;
         break;
     }
 
@@ -94,6 +95,10 @@ export class GetHtmlService {
         return processedHtml;
       })
       .startWith(''); // in detail page, spinner will show on empty string
+  }
+
+  rawUrl(secId: string, filePath: string) {
+    return `https://raw.githubusercontent.com/${this.githubUsernameReponame}/master/${this.secPaths[secId]}/${filePath}`;
   }
 
 }

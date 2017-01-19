@@ -1,19 +1,14 @@
 import { Injectable } from '@angular/core';
-import { 
-  items as articlesItems,
-  queryFac as articlesQueryFac,
-  notFound as articleNotFound
-} from './articles';
-import { items as authorsItems, queryFac as authorsQueryFac } from './authors';
+import { ArticlesApi } from './articles.api';
+import { AuthorsApi } from './authors.api';
+import { ColumnsApi } from './columns.api';
 
 @Injectable()
 export class ApiService {
-  articles = {
-    query: articlesQueryFac(articlesItems),
-    notFound: articleNotFound,
-    /*items: articlesItems*/
-  };
-  authors = { query: authorsQueryFac(authorsItems), /*items: authorsItems*/ };
-  constructor() { }
+  constructor(
+    public authors: AuthorsApi,
+    public articles: ArticlesApi,
+    public columns: ColumnsApi
+  ) {}
 
 }

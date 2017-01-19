@@ -8,5 +8,10 @@ export const libraryConst = {
     secId: 'authors',
     secTitle: '特约作者',
     itemTitle: '作者详情'
+  },
+  columns: {
+    secId: 'columns',
+    secTitle: '技术专栏',
+    itemTitle: '专栏内容'
   }
-}
+};

@@ -1,5 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MenuItem } from '../../models';
+import { libraryConst as lc } from '../../../library';
+
+const authorsOrColumns = [
+  lc.authors.secId,
+  lc.columns.secId
+];
 
 @Component({
   selector: 'app-list',
@@ -10,18 +16,21 @@ export class ListComponent implements OnInit {
   @Input() items: any[];
   @Input() secId: string;
   menuItems: MenuItem[];
+  isAuthorsOrColumns: boolean;
   constructor() { }
 
   /**
    * will map items to menuItems when necessary
    */
   ngOnInit() {
-    if (this.secId === 'authors' ) {
-      this.menuItems = this.items.map(author => ({
-        icon: author.avatar,
-        description: author.bio,
-        title: author.name,
-        url: `./${author.id}`
+
+    if ( authorsOrColumns.indexOf(this.secId) > -1 ) {
+      this.isAuthorsOrColumns = true;
+      this.menuItems = this.items.map(item => ({
+        icon: item.avatar,
+        description: item.bio,
+        title: item.name,
+        url: `./${item.id}`
       }));
     }
   }

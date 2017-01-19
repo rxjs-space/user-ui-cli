@@ -3,19 +3,24 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { LibraryHomeComponent } from './library-home/library-home.component';
 import { HomeComponent, ShowComponent, DataResolverService } from '../shared';
-import { libraryConst } from './library';
+import { libraryConst as lc } from './library';
 
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', component: LibraryHomeComponent },
-  { path: libraryConst.articles.secId, data: {title: libraryConst.articles.secTitle}, children: [
+  { path: lc.articles.secId, data: {title: lc.articles.secTitle}, children: [
     { path: '', pathMatch: 'full', component: HomeComponent },
-    { path: ':id', data: {title: libraryConst.articles.itemTitle}, pathMatch: 'full', component: ShowComponent },
+    { path: ':id', data: {title: lc.articles.itemTitle}, pathMatch: 'full', component: ShowComponent },
   ]},
-  { path: libraryConst.authors.secId, data: {title: libraryConst.authors.secTitle}, children: [
+  { path: lc.authors.secId, data: {title: lc.authors.secTitle}, children: [
     {path: '', pathMatch: 'full', component: HomeComponent},
-    {path: ':id', data: { title: libraryConst.authors.itemTitle } , pathMatch: 'full', component: ShowComponent},
-  ]}
+    {path: ':id', data: { title: lc.authors.itemTitle } , pathMatch: 'full', component: ShowComponent},
+  ]},
+  { path: lc.columns.secId, data: {title: lc.columns.secTitle}, children: [
+    {path: '', pathMatch: 'full', component: HomeComponent},
+    {path: ':id', data: { title: lc.columns.itemTitle } , pathMatch: 'full', component: ShowComponent},
+  ]},
+
 ];
 
 @NgModule({

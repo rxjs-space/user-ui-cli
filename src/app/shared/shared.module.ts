@@ -4,7 +4,8 @@ import { SharedRoutingModule } from './shared-routing.module';
 import { SharedComponent } from './shared.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 
-import { ThreadApi, BookApi, ShowcaseApi, ApiService} from './api';
+import { ThreadApi, BookApi, ShowcaseApi, ApiService, 
+  ColumnsApi, ArticlesApi, AuthorsApi } from './api';
 import { AuthService, SvgHolderService, GetHtmlService } from './services';
 import { LayoutNavComponent } from './component/layout-nav/layout-nav.component';
 import { HtmlViewerComponent } from './component/html-viewer/html-viewer.component';
@@ -34,7 +35,8 @@ export class SharedModule {
       ngModule: SharedModule,
       providers: [
         AuthService, SvgHolderService, GetHtmlService,
-        ThreadApi, BookApi, ShowcaseApi, ApiService
+        ThreadApi, BookApi, ShowcaseApi, ApiService, ColumnsApi,
+        ArticlesApi, AuthorsApi
       ]
     }
   }

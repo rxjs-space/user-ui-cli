@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Article } from '../../models/article';
+import { Article } from '../models';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 
-export const items: Article[] = [
+const items: Article[] = [
   {
     id: '在 Angular-CLI 中启用 HMR',
     title: '在 Angular-CLI 中启用 HMR',
@@ -459,7 +459,7 @@ export const items: Article[] = [
   }
 ];
 
-export const notFound = {
+const notFound: Article = {
     id: '404',
     title: '404',
     content: null,
@@ -467,20 +467,32 @@ export const notFound = {
     authors: ['404']
   }
 
-/**
- * the fake query will filter the array, if nothing found, there will be an empty array
- * Not using Observable.prototype.filter, because
- * if filter Observable and nothing found, there will be Observable.never, which is not useful to consume
- */
-export function queryFac(itemsX: Article[]) {
-  return function(params: {id?: string, author?: string, tag?: string, column?: string}): Observable<Article[]> {
-    const filteredItems = itemsX
-      .filter(item => !item.hidden)
-      .filter(item => !params.id || (item.id === params.id))
-      .filter(item => !params.author || (item.authors.indexOf(params.author) !== -1))
-      .filter(item => !params.tag || (item.tags.indexOf(params.tag) !== -1))
-      .filter(item => !params.column || (item.column === params.column));
-    return Observable.of(filteredItems);
-  };
-}
 
+
+
+@Injectable()
+export class ArticlesApi {
+  secId = 'articles';
+  private items = items;
+  public notFound = notFound;
+  public query = this.queryFac(this.items);
+  constructor(/*private ghs: GetHtmlService*/) {}
+
+  /**
+   * the fake query will filter the array, if nothing found, there will be an empty array
+   * Not using Observable.prototype.filter, because
+   * if filter Observable and nothing found, there will be Observable.never, which is not useful to consume
+   */
+  private queryFac(itemsX: Article[]) {
+    return function(params: {id?: string, author?: string, tag?: string, column?: string}): Observable<Article[]> {
+      const filteredItems = itemsX
+        .filter(item => !item.hidden)
+        .filter(item => !params.id || (item.id === params.id))
+        .filter(item => !params.author || (item.authors.indexOf(params.author) !== -1))
+        .filter(item => !params.tag || (item.tags.indexOf(params.tag) !== -1))
+        .filter(item => !params.column || (item.column === params.column));
+      return Observable.of(filteredItems);
+    };
+  }
+
+}
