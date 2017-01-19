@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuItem } from '../../shared';
-import { libraryConst } from '../library';
+import { ApiService } from '../../shared/api';
 
 @Component({
   selector: 'app-library-home',
@@ -10,16 +10,16 @@ import { libraryConst } from '../library';
 export class LibraryHomeComponent implements OnInit {
   items: MenuItem[] = [
     {
-      title: libraryConst.articles.secTitle,
+      title: this.api.apis.articles.secTitle,
       description: '技巧、实践、剖析、案例',
       icon: require('../_images/articles.svg'),
-      url: `./${libraryConst.articles.secId}`
+      url: `./${this.api.apis.articles.secId}`
     },
     {
-      title: libraryConst.columns.secTitle,
+      title: this.api.apis.columns.secTitle,
       description: '由一线技术专家撰写的专栏',
       icon: require('../_images/professional.svg'),
-      url: `./${libraryConst.columns.secId}`
+      url: `./${this.api.apis.columns.secId}`
     },
     {
       title: '前沿观察',
@@ -40,14 +40,14 @@ export class LibraryHomeComponent implements OnInit {
       url: './partner'
     },
     {
-      title: libraryConst.authors.secTitle,
+      title: this.api.apis.authors.secTitle,
       description: '分享与成长',
       icon: require('../_images/writing.svg'),
-      url: `./${libraryConst.authors.secId}`
+      url: `./${this.api.apis.authors.secId}`
     }
 
   ];
-  constructor() { }
+  constructor(private api: ApiService) { }
 
   ngOnInit() {
   }

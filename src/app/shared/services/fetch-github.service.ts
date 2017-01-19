@@ -6,7 +6,8 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/startWith';
 
 import { Article, Author } from '../models';
-import { API_CONFIG, ApiConfig } from '../config'
+import { API_CONFIG, ApiConfig } from '../config';
+import { ApiService } from '../api';
 
 /**
  * It's inconvenient to install webpack loaders in a angular-cli powered project.
@@ -55,17 +56,21 @@ export class FetchGithubService {
   }
   constructor(
     private http: Http,
-    @Inject(API_CONFIG) private apiConfig: ApiConfig) { }
+    @Inject(API_CONFIG) private apiConfig: ApiConfig,
+    private api: ApiService) { }
 
 
   /**
    * try find data in cache, if none, execute far (short for 'fetchAndReplace')
    */
   fetchAndReplace(secId: string, item: any): Observable<html> {
+    /**
+     * the mapKey here is the markdown filePath
+     */
     let mapKey;
     switch (secId) {
-      case 'articles': mapKey = item.content; break;
-      case 'authors': mapKey = item.description; break;
+      case this.api.apis.articles.secId: mapKey = item.content; break;
+      case this.api.apis.authors.secId: mapKey = item.description; break;
     }
     const cached = this.cache.get(mapKey);
     if (cached) {
@@ -85,13 +90,13 @@ export class FetchGithubService {
 
     let apiUrl, pathPrefix;
     switch (secId) {
-      case 'articles':
+      case this.api.apis.articles.secId:
         apiUrl = this.apiUrl(secId, mapKey);
           // `https://api.github.com/repos/${this.githubUsernameReponame}/contents/${this.secPaths.articles}/${mapKey}?ref=master`;
         pathPrefix = this.rawUrl(secId, `${mapKey}/`);
           // `https://raw.githubusercontent.com/${this.githubUsernameReponame}/master/${this.secPaths.articles}/${mapKey}/`;
         break;
-      case 'authors':
+      case this.api.apis.authors.secId:
         apiUrl =
           `https://api.github.com/repos/${this.githubUsernameReponame}/contents/${this.secPaths.authors}/${mapKey}?ref=master`;
         pathPrefix = this.rawUrl(secId, '/_images/');

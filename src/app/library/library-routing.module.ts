@@ -3,22 +3,22 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { LibraryHomeComponent } from './library-home/library-home.component';
 import { HomeComponent, ShowComponent, DataResolverService } from '../shared';
-import { libraryConst as lc } from './library';
+import { apiConst } from '../shared/api';
 
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', component: LibraryHomeComponent },
-  { path: lc.articles.secId, resolve: {items: DataResolverService}, data: {title: lc.articles.secTitle}, children: [
+  { path: apiConst.articles.secId, resolve: {items: DataResolverService}, data: {title: apiConst.articles.secTitle}, children: [
     { path: '', pathMatch: 'full', component: HomeComponent },
-    { path: ':id', data: {title: lc.articles.itemTitle}, pathMatch: 'full', component: ShowComponent },
+    { path: ':id', data: {title: apiConst.articles.itemTitle}, pathMatch: 'full', component: ShowComponent },
   ]},
-  { path: lc.authors.secId, data: {title: lc.authors.secTitle}, children: [
+  { path: apiConst.authors.secId, resolve: {items: DataResolverService}, data: {title: apiConst.authors.secTitle}, children: [
     {path: '', pathMatch: 'full', component: HomeComponent},
-    {path: ':id', data: { title: lc.authors.itemTitle } , pathMatch: 'full', component: ShowComponent},
+    {path: ':id', data: { title: apiConst.authors.itemTitle } , pathMatch: 'full', component: ShowComponent},
   ]},
-  { path: lc.columns.secId, data: {title: lc.columns.secTitle}, children: [
+  { path: apiConst.columns.secId, resolve: {items: DataResolverService}, data: {title: apiConst.columns.secTitle}, children: [
     {path: '', pathMatch: 'full', component: HomeComponent},
-    {path: ':id', data: { title: lc.columns.itemTitle } , pathMatch: 'full', component: ShowComponent},
+    {path: ':id', data: { title: apiConst.columns.itemTitle } , pathMatch: 'full', component: ShowComponent},
   ]},
 
 ];

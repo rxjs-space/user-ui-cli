@@ -1,10 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MenuItem } from '../../models';
-import { libraryConst as lc } from '../../../library';
+import { apiConst } from '../../api';
 
 const authorsOrColumns = [
-  lc.authors.secId,
-  lc.columns.secId
+  apiConst.authors.secId,
+  apiConst.columns.secId
 ];
 
 @Component({

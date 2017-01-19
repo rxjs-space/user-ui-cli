@@ -1,1 +1,0 @@
-export { libraryConst } from './library';
