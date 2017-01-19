@@ -8,7 +8,7 @@ import { libraryConst as lc } from './library';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', component: LibraryHomeComponent },
-  { path: lc.articles.secId, data: {title: lc.articles.secTitle}, children: [
+  { path: lc.articles.secId, resolve: {items: DataResolverService}, data: {title: lc.articles.secTitle}, children: [
     { path: '', pathMatch: 'full', component: HomeComponent },
     { path: ':id', data: {title: lc.articles.itemTitle}, pathMatch: 'full', component: ShowComponent },
   ]},

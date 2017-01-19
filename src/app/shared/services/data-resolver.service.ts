@@ -4,47 +4,29 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 
 import { ShowComponent } from '../component';
+import { FetchGithubService } from './fetch-github.service';
+import { ApiService } from '../api/api.service';
 
 @Injectable()
-export class DataResolverService implements Resolve<any>{
+export class DataResolverService implements Resolve<any> {
 
-  constructor() { }
+  constructor(
+    private fg: FetchGithubService,
+    // private api: ApiService
+  ) { }
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> {
-    // console.log(route);
-    // console.log(state);
-    const secId = route.parent.url[0].path;
-    // console.log(route.component instanceof ShowComponent);
-    return Observable.of('x');
-    // return this.activatedRoute.data
-    //   .switchMap((data: RoutingData) => {
-    //     this.data = data;
-    //     return this.activatedRoute.params;
-    //   })
-    //   .switchMap(params => this.api[this.data.secId].query(params)) // the 'params' contains id, then filter by id
-    //   .map(items => items[0]) // map the array of 1 item to item
-    //   .do((item: {title?: string, name?: string}) => {
-    //     this.setDocumentTitle(this.data.secId, item);
-    //   })
-    //   .switchMap(item => {
-    //     // console.log(item);
-    //     // go get the html rendered by github
-    //     return this.getHtml.fetchAndReplace(this.data.secId, item);
-    //   }, (item, html) => ({
-    //     item: Object.assign({}, item),
-    //     html
-    //   }))
-    //   .map(combo => {
-    //     // console.log(combo);
-    //     switch (this.data.secId) {
-    //       case 'articles':
-    //         combo.item.content = combo.html; break;
-    //       case 'authors':
-    //         combo.item.description = combo.html;
-    //         combo.item.avatar = 'https://raw.githubusercontent.com/angular-bbs/user-ui/master/src/app/_shared/api/authors/' + combo.item.avatar
-    //         break;
-    //     }
-    //     return combo.item;
-    //   })
+    console.log(route.url[0].path);
+    console.log(state);
+    const currentUrl = route.url[0].path;
+    const parentUrl = route.parent.url[0].path;
+    const isApiSec = ['articles'].indexOf(currentUrl) > -1;
+    // console.log(isApiSec);
+    if (isApiSec) {
+      return this.fg.fetchJson(currentUrl);
+    } else {
+      return Observable.of([]);
+    }
+
   }
 }
 

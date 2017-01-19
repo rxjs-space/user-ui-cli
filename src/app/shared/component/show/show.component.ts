@@ -6,7 +6,7 @@ import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/map';
 import { ApiService } from '../../api';
-import { GetHtmlService } from '../../services';
+import { FetchGithubService } from '../../services';
 
 @Component({
   selector: 'app-show',
@@ -21,7 +21,7 @@ export class ShowComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private api: ApiService,
-    private getHtml: GetHtmlService,
+    private fgs: FetchGithubService,
     private router: Router) { }
 
   /**
@@ -29,6 +29,7 @@ export class ShowComponent implements OnInit {
    */
   ngOnInit() {
     // it may not be good practice to get secId and secTitle by getValue()
+
     this.secId = (<BehaviorSubject<UrlSegment[]>>(this.route.parent.url)).getValue()[0].path;
     this.secTitle = (<BehaviorSubject<any>>(this.route.parent.data)).getValue().title;
     this.itemRx = this.route.data
@@ -53,7 +54,7 @@ export class ShowComponent implements OnInit {
           return Observable.of('<p>找到个404</p>'); // this will be the html for 404
         } else {
           // go get the html rendered by github
-          return this.getHtml.fetchAndReplace(this.secId, item);
+          return this.fgs.fetchAndReplace(this.secId, item);
         }
       }, (item, html) => ({
         item: Object.assign({}, item),

@@ -7,6 +7,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SharedModule } from './shared/shared.module';
 
+import { API_CONFIG, DEFAULT_API_CONFIG } from './shared/config';
+
 /**
  * app's root module
  */
@@ -21,7 +23,9 @@ import { SharedModule } from './shared/shared.module';
     AppRoutingModule,
     SharedModule.forRoot()
   ],
-  providers: [],
+  providers: [
+    {provide: API_CONFIG, useValue: DEFAULT_API_CONFIG}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

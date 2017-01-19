@@ -1,16 +1,16 @@
 /* tslint:disable:no-unused-variable */
 
 import { TestBed, async, inject } from '@angular/core/testing';
-import { GetHtmlService } from './get-html.service';
+import { FetchGithubService } from './fetch-github.service';
 
-describe('GetHtmlService', () => {
+describe('FetchGithubService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [GetHtmlService]
+      providers: [FetchGithubService]
     });
   });
 
-  it('should ...', inject([GetHtmlService], (service: GetHtmlService) => {
+  it('should ...', inject([FetchGithubService], (service: FetchGithubService) => {
     expect(service).toBeTruthy();
   }));
 });

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Column } from '../models';
-import { GetHtmlService } from '../services';
+import { FetchGithubService } from '../services';
 
 const items: Column[] = [
   {
@@ -47,7 +47,7 @@ export class ColumnsApi {
   }));
   public notFound = notFound;
   public query = this.queryFac(this.items);
-  constructor(private ghs: GetHtmlService) {}
+  constructor(private ghs: FetchGithubService) {}
 
   private queryFac(itemsX: any[]) {
     return function(params: {id?: string}): Observable<any[]> {

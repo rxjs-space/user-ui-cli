@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
@@ -6,6 +6,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/startWith';
 
 import { Article, Author } from '../models';
+import { API_CONFIG, ApiConfig } from '../config'
 
 /**
  * It's inconvenient to install webpack loaders in a angular-cli powered project.
@@ -31,18 +32,32 @@ type mapKey = string;
 type html = string;
 
 @Injectable()
-export class GetHtmlService {
+export class FetchGithubService {
+
+  /**
+   * for constructing urls to github and other purposes, like:
+   * https://raw.githubusercontent.com/rxjs-space/user-ui-api/master/${secData.articles.secId}/index.json
+   */
+  secData = {
+    articles: {
+      secId: 'articles'
+    }
+  };
   /**
    * this map will cache the htmls
    */
-  htmlCacheMap: Map<mapKey, html> = new Map();
+  private cache: Map<mapKey, html> = new Map();
   githubUsernameReponame = 'angular-bbs/user-ui';
   secPaths = {
     articles: 'src/app/_shared/api/articles',
     authors: 'src/app/_shared/api/authors',
     columns: 'src/app/_shared/api/columns',
   }
-  constructor(private http: Http) { }
+  constructor(
+    private http: Http,
+    @Inject(API_CONFIG) private apiConfig: ApiConfig) { }
+
+
   /**
    * try find data in cache, if none, execute far (short for 'fetchAndReplace')
    */
@@ -52,7 +67,7 @@ export class GetHtmlService {
       case 'articles': mapKey = item.content; break;
       case 'authors': mapKey = item.description; break;
     }
-    const cached = this.htmlCacheMap.get(mapKey);
+    const cached = this.cache.get(mapKey);
     if (cached) {
       return Observable.of(cached);
     } else {
@@ -91,7 +106,7 @@ export class GetHtmlService {
         const processedHtml = html
           .replace(/src=\"\.(.+?)\"/g, `src=\"${pathPrefix}\$1\"`)
           .replace(/href=\"\.(.+?)\"/g, `href=\"${pathPrefix}\$1\"`);
-        this.htmlCacheMap.set(mapKey, processedHtml);
+        this.cache.set(mapKey, processedHtml);
         return processedHtml;
       })
       .startWith(''); // in detail page, spinner will show on empty string
@@ -99,6 +114,28 @@ export class GetHtmlService {
 
   rawUrl(secId: string, filePath: string) {
     return `https://raw.githubusercontent.com/${this.githubUsernameReponame}/master/${this.secPaths[secId]}/${filePath}`;
+  }
+
+  /**
+   * example: https://raw.githubusercontent.com/rxjs-space/user-ui-api/master/articles/index.json
+   * for above rawUrl, username = 'rxjs-space', apiRepoName = 'user-ui-api', pathToApi = '', secId = 'articles', filePath = 'index.json'
+   */
+  rawUrl2(secId: string, filePath: string) {
+    const userNameAndRepoName = `${this.apiConfig.githubUsername}/${this.apiConfig.apiRepoName}`;
+    return `https://raw.githubusercontent.com/${userNameAndRepoName}/master/${this.apiConfig.pathToApi}/${secId}/${filePath}`;
+  }
+
+  fetchJson(secId: string) {
+    const rawUrl = this.rawUrl2(secId, 'index.json');
+    const itemsCached = this.cache.get(secId);
+    if (itemsCached) {
+      return Observable.of(itemsCached);
+    } else {
+      return this.http.get(rawUrl)
+        .map(res => res.json())
+        .do(items => this.cache.set(secId, items));
+    }
+
   }
 
 }

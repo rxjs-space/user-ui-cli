@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Author } from '../models';
-import { GetHtmlService } from '../services';
+import { FetchGithubService } from '../services';
 
 const items: Author[] = [
   {
@@ -115,23 +115,6 @@ const notFound: Author =   {
     homepage: '/'
   };
 
-/**
- * fake query for author[s]
- * `library/author/{author.id}` will lead to the author page with the id
- * if there is no user with that id, will also filter author.name
- * if no id params passed, will return full list of authors
- * 
- * use type any, because this fac will also be used in other api
- */
-function queryFac(itemsX: any[]) {
-  return function(params: {id?: string}): Observable<any[]> {
-    const filteredItems = itemsX
-      .filter(item =>
-        !params.id || ((item.id === params.id) || (item.name === params.id))
-      );
-    return Observable.of(filteredItems);
-  };
-}
 
 
 
@@ -147,8 +130,16 @@ export class AuthorsApi {
   }));
   public notFound = notFound;
   public query = this.queryFac(this.items);
-  constructor(private ghs: GetHtmlService) {}
+  constructor(private ghs: FetchGithubService) {}
 
+  /**
+   * fake query for author[s]
+   * `library/author/{author.id}` will lead to the author page with the id
+   * if there is no user with that id, will also filter author.name
+   * if no id params passed, will return full list of authors
+   * 
+   * use type any, because this fac will also be used in other api
+   */
   private queryFac(itemsX: any[]) {
     return function(params: {id?: string}): Observable<any[]> {
       const filteredItems = itemsX
