@@ -14,7 +14,7 @@ import { FetchGithubService } from '../../services';
   styleUrls: ['./show.component.scss']
 })
 export class ShowComponent implements OnInit {
-  data: Data;
+  data: {items?: any[]};
   itemRx: Observable<any>;
   secId: string;
   secTitle: string;
@@ -33,15 +33,15 @@ export class ShowComponent implements OnInit {
     this.secId = (<BehaviorSubject<UrlSegment[]>>(this.route.parent.url)).getValue()[0].path;
     this.secTitle = (<BehaviorSubject<any>>(this.route.parent.data)).getValue().title;
     this.itemRx = this.route.data
-      .switchMap((data: Data) => {
+      .switchMap((data: {items?: any[]}) => {
         // console.log(data);
         this.data = data;
         return this.route.params;
       })
-      .switchMap(params => this.api[this.secId].query(params)) // the 'params' contains id, then filter by id
+      .switchMap(params => this.api.apis[this.secId].query(this.data.items, params)) // the 'params' contains id, then filter by id
       .map((items: any[]) => {
         if (!items.length) {
-          items[0] = this.api[this.secId].notFound;
+          items[0] = this.api.apis[this.secId].notFound;
         }
         return items[0];
       }) // map the array of 1 item to item

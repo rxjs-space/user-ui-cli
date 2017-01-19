@@ -14,7 +14,7 @@ import { ApiService } from '../../api';
 })
 export class HomeComponent implements OnInit {
   itemsRx: Observable<any[]>;
-  data: Data;
+  data: {items?: any[]};
   secId: string;
   constructor(
     private route: ActivatedRoute,
@@ -29,17 +29,13 @@ export class HomeComponent implements OnInit {
     // it may not be good practice to get secId by getValue()
     this.secId = (<BehaviorSubject<UrlSegment[]>>(this.route.parent.url)).getValue()[0].path;
 
-
     this.itemsRx = this.route.data
       .switchMap((data: {items?: any[]}) => {
         console.log(data);
-        if (data.items.length) {
-          this.api[this.secId].items = data.items;
-        }
         this.data = data;
         return this.route.params;
       })
-      .switchMap(params => this.api[this.secId].query(params))
+      .switchMap(params => this.api.apis[this.secId].query(this.data.items, params))
       .map((items: any[]) => {
         let processedItems;
         switch (this.secId) {

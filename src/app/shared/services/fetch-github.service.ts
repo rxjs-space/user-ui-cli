@@ -86,8 +86,8 @@ export class FetchGithubService {
     let apiUrl, pathPrefix;
     switch (secId) {
       case 'articles':
-        apiUrl =
-          `https://api.github.com/repos/${this.githubUsernameReponame}/contents/${this.secPaths.articles}/${mapKey}/_index.md?ref=master`;
+        apiUrl = this.apiUrl(secId, mapKey);
+          // `https://api.github.com/repos/${this.githubUsernameReponame}/contents/${this.secPaths.articles}/${mapKey}?ref=master`;
         pathPrefix = this.rawUrl(secId, `${mapKey}/`);
           // `https://raw.githubusercontent.com/${this.githubUsernameReponame}/master/${this.secPaths.articles}/${mapKey}/`;
         break;
@@ -114,6 +114,12 @@ export class FetchGithubService {
 
   rawUrl(secId: string, filePath: string) {
     return `https://raw.githubusercontent.com/${this.githubUsernameReponame}/master/${this.secPaths[secId]}/${filePath}`;
+  }
+
+  apiUrl(secId: string, filePath: string) {
+    const userNameAndRepoName = `${this.apiConfig.githubUsername}/${this.apiConfig.apiRepoName}`;
+    return `https://api.github.com/repos/${userNameAndRepoName}/contents/${this.apiConfig.pathToApi}/${secId}/${filePath}?ref=master`;
+    // https://api.github.com/repos/rxjs-space/user-ui-api/contents/articles/${mapKey}?ref=master`;
   }
 
   /**
