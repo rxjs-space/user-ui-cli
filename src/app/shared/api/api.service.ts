@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
-import { AuthorsApi } from './authors.api';
-import { ColumnsApi } from './columns.api';
+// import { AuthorsApi } from './authors.api';
+// import { ColumnsApi } from './columns.api';
 import { Article, Author, Column } from '../models';
 
 export const apiConst = {

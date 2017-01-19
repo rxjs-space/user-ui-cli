@@ -5,7 +5,7 @@ import { SharedComponent } from './shared.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 
 import { ThreadApi, BookApi, ShowcaseApi,
-  ColumnsApi, AuthorsApi } from './api';
+  /*ColumnsApi*/ /*AuthorsApi*/ } from './api';
   import { ApiService } from './api/api.service';
 import { AuthService, SvgHolderService, FetchGithubService } from './services';
 import { LayoutNavComponent } from './component/layout-nav/layout-nav.component';
@@ -36,8 +36,8 @@ export class SharedModule {
       ngModule: SharedModule,
       providers: [
         AuthService, SvgHolderService, FetchGithubService,
-        ThreadApi, BookApi, ShowcaseApi, ApiService, ColumnsApi,
-        AuthorsApi
+        ThreadApi, BookApi, ShowcaseApi, ApiService, /*ColumnsApi*,/
+        /*AuthorsApi*/
       ]
     }
   }
