@@ -74,6 +74,8 @@ export class ShowComponent implements OnInit {
       .switchMap(this.fetchHtml.bind(this), (item, html) => ({item, html}))
       .map(this.replaceWithHtml);
 
+    // following code do the samething as above, but with several switchMaps
+
     // this.itemRx = this.route.parent.url
     //   .switchMap(parentUrl => {
     //     return this.route.data;
