@@ -62,7 +62,7 @@ export class ShowComponent implements OnInit {
         // we need the 1st item of the items
         const { secId, items } = comboSI;
         let item;
-        if (!items.length) {
+        if (items.length === 0) {
           item = Object.assign({}, this.api.apis[secId].notFound);
         } else {
           item = Object.assign({}, items[0]);
