@@ -58,6 +58,7 @@ export class FetchGithubService {
     switch (secId) {
       case this.api.apis.articles.secId:
       case this.api.apis.news.secId:
+      case this.api.apis.resources.secId:
         mapKey = item.content; break;
       case this.api.apis.authors.secId:
         mapKey = item.description; break;
@@ -82,6 +83,7 @@ export class FetchGithubService {
     switch (secId) {
       case this.api.apis.articles.secId:
       case this.api.apis.news.secId:
+      case this.api.apis.resources.secId:
         apiUrl = this.apiUrl(secId, mapKey);
         pathPrefix = this.rawUrl2(secId, `${mapKey}/`).replace(/_index.md/, ''); // article.content has '_index.md' at the end
         break;
@@ -145,6 +147,7 @@ export class FetchGithubService {
               }));
               break;
             case 'news':
+            case 'resources':
               items = items.map(item => Object.assign({}, item, {
                 image: this.rawUrl2(secId, item.image)
               }));

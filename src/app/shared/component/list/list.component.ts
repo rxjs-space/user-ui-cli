@@ -38,12 +38,13 @@ export class ListComponent implements OnInit {
         }));
         break;
       case 'news':
+      case 'resources':
         this.useMenuListComponent = true;
         this.menuItems = this.items.map(item => ({
           title: item.title,
           icon: item.image,
           description: item.summary,
-          url: `/library/news/${item.id}`
+          url: `./${item.id}`
         }));
         break;
     }
@@ -51,5 +52,4 @@ export class ListComponent implements OnInit {
   }
 
 }
-
 

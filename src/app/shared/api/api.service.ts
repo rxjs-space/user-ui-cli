@@ -18,6 +18,7 @@ interface Apis {
   authors: Section;
   columns: Section;
   news: Section;
+  resources: Section;
 }
 
 const articleNotFound: Article = {
@@ -72,6 +73,12 @@ const apiConst = {
     secTitle: '前沿观察',
     itemTitle: '新闻详情',
     notFound: articleNotFound
+  },
+  resources: {
+    secId: 'resources',
+    secTitle: '资源雷达',
+    itemTitle: '资源详情',
+    notFound: articleNotFound
   }
 };
 @Injectable()
@@ -106,7 +113,15 @@ export class ApiService {
       itemTitle: ApiService.apiConst.news.itemTitle,
       query: this.idQuery,
       notFound: ApiService.apiConst.news.notFound
+    },
+    resources: {
+      secId: ApiService.apiConst.resources.secId,
+      secTitle: ApiService.apiConst.resources.secTitle,
+      itemTitle: ApiService.apiConst.resources.itemTitle,
+      query: this.idQuery,
+      notFound: ApiService.apiConst.resources.notFound
     }
+
   };
 
 

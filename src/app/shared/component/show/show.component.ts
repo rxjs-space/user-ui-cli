@@ -132,6 +132,7 @@ export class ShowComponent implements OnInit {
     switch (secId) {
       case 'articles':
       case 'news':
+      case 'resources':
         combo.item.content = combo.html; break;
       case 'authors':
         combo.item.description = combo.html;
@@ -144,6 +145,7 @@ export class ShowComponent implements OnInit {
     switch (item.secId) {
       case 'articles':
       case 'news':
+      case 'resources':
         document.title = `${item.title} - Angular中文社区`; break;
       case 'authors':
         document.title = `${item.name} - 作者 - Angular中文社区`; break;

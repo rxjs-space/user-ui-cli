@@ -22,22 +22,22 @@ export class LibraryHomeComponent implements OnInit {
       url: `./${this.api.apis.columns.secId}`
     },
     {
-      title: '前沿观察',
+      title: this.api.apis.news.secTitle,
       description: '来自国内外的重要新闻',
       icon: require('../_images/news.svg'),
-      url: './news'
+      url: `./${this.api.apis.news.secId}`
     },
     {
-      title: '资源雷达',
+      title: this.api.apis.resources.secTitle,
       description: '第三方资源的推荐与评测',
       icon: require('../_images/radar.svg'),
-      url: './resource'
+      url: `./${this.api.apis.resources.secId}`
     },
     {
       title: '友情链接',
       description: '与我们并肩作战的友军站点',
       icon: require('../_images/external.svg'),
-      url: './partner'
+      url: './partners'
     },
     {
       title: this.api.apis.authors.secTitle,
