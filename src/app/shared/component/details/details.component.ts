@@ -7,7 +7,6 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class DetailsComponent implements OnInit {
   @Input() item: any;
-  @Input() secId: string;
   constructor() { }
 
   ngOnInit() {

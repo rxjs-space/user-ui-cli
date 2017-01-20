@@ -1,12 +1,13 @@
+
 <header>
   <ol class="breadcrumb">
     <li class="breadcrumb-item">
-      <a routerLink="../">{{data?.apiConst[secId].secTitle}}</a>
+      <a routerLink="../">{{titles?.secTitle}}</a>
     </li>
-    <li class="breadcrumb-item active">{{data?.apiConst[secId].itemTitle}}</li>
+    <li class="breadcrumb-item active">{{titles?.itemTitle}}</li>
   </ol>
 </header>
 
+<app-details [item]="itemRx|async"></app-details>
 
-<!--{{this.itemRx | async | json}}-->
-<app-details [item]="itemRx|async" [secId]="secId"></app-details>
+

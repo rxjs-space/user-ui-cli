@@ -9,11 +9,11 @@
     <hr/>
     <div>
       作者：
-      <a *ngFor="let author of item.authors" class="card-link" [routerLink]="['/library/author', {id: author}]">{{author}}</a>
+      <a *ngFor="let author of item.authors" class="card-link" [routerLink]="['/library/authors', {id: author}]">{{author}}</a>
     </div>
     <div>
       译者：
-      <a *ngFor="let translator of item.translators" class="card-link" [routerLink]="['/library/author', {id: translator}]">{{translator}}</a>
+      <a *ngFor="let translator of item.translators" class="card-link" [routerLink]="['/library/authors', {id: translator}]">{{translator}}</a>
     </div>
     <div>
       购买：

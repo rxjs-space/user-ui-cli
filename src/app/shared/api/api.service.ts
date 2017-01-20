@@ -64,7 +64,7 @@ export class ApiService {
       secId: ApiService.apiConst.columns.secId,
       secTitle: ApiService.apiConst.columns.secTitle,
       itemTitle: ApiService.apiConst.columns.itemTitle,
-      query: this.idQuery,
+      query: this.authorQuery,
       notFound: this.columnsNotFound
     },
     news: {
@@ -128,6 +128,14 @@ export class ApiService {
     const filteredItems = itemsX
       .filter(item =>
         !params.id || ((item.id === params.id) || (item.name === params.id))
+      );
+    return Observable.of(filteredItems);
+  };
+
+  authorQuery(itemsX: any[], params: {author?: string}): Observable<any[]> {
+    const filteredItems = itemsX
+      .filter(item =>
+        !params.author || (item.authors.indexOf(params.author) !== -1)
       );
     return Observable.of(filteredItems);
   };

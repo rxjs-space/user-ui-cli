@@ -1,10 +1,10 @@
-<div *ngIf="secId === 'articles'" class="articl-detail">
+<div *ngIf="item.secId === 'articles'" class="articl-detail">
   <h2>{{item.title}}</h2>
 
   <p>
-    <a *ngFor="let author of item.authors" [routerLink]="['/library/author', author]">{{author}}</a>
+    <a *ngFor="let author of item.authors" [routerLink]="['/library/authors', author]">{{author}}</a>
     <a *ngFor="let translator of item.translators"
-      [routerLink]="['/library/author', translator]">[译]{{translator}}</a>
+      [routerLink]="['/library/authors', translator]">[译]{{translator}}</a>
     <span *ngIf="item.translation">译作</span>
     <span *ngIf="item.exclusive">独家</span>
     <span *ngIf="item.first">首发</span>
@@ -62,7 +62,7 @@
 
 
 
-<div *ngIf="secId === 'authors'" class="author-detail">
+<div *ngIf="item.secId === 'authors'" class="author-detail">
   <div class="card">
     <img class="img-circle" [src]="item.avatar">
     <div class="card-block">
@@ -74,15 +74,15 @@
       <hr/>
       <p class="text-xs-center">
         <a [href]="item.homepage" target="_blank">主页</a>
-        <a [routerLink]="['/library/columns', {item: item.id}]">专栏</a>
-        <a [routerLink]="['/library/articles', {item: item.id}]">文章</a>
-        <a [routerLink]="['/library/books', {item: item.id}]">书籍</a>
+        <a [routerLink]="['/library/columns', {author: item.id}]">专栏</a>
+        <a [routerLink]="['/library/articles', {author: item.id}]">文章</a>
+        <a [routerLink]="['/library/books', {id: item.id}]">书籍</a>
       </p>
     </div>
   </div>
 </div>
 
-<div *ngIf="secId === 'columns'" class="column-detail">
+<div *ngIf="item.secId === 'columns'" class="column-detail">
   <div class="card">
     <img class="img-circle" [src]="item.avatar">
     <div class="card-block">

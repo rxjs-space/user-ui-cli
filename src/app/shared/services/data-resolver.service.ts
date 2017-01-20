@@ -15,6 +15,7 @@ export class DataResolverService implements Resolve<any> {
     private api: ApiService
   ) { }
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> {
+    console.log('resolving data');
     // console.log(route.url[0].path);
     // console.log(state);
     const currentUrl = route.url[0].path;

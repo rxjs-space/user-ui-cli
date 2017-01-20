@@ -35,7 +35,7 @@ export class HomeComponent implements OnInit {
       .switchMap(params => {
         this.secId = (<any>params).secId;
         return this.api.apis[this.secId].query(this.data.items, params);
-      })
+      });
 
   }
 }
