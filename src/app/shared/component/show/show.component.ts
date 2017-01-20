@@ -114,6 +114,7 @@ export class ShowComponent implements OnInit {
   fetchHtml(item) {
     switch (true) {
       case item.secId === 'columns':
+      case item.secId === 'partners':
         // no need to fetch html for 'columns'
         return Observable.of('');
       case item.id === '404':

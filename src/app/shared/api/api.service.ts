@@ -3,7 +3,7 @@ import { Observable } from 'rxjs/Observable';
 
 // import { AuthorsApi } from './authors.api';
 // import { ColumnsApi } from './columns.api';
-import { Article, Author, Column } from '../models';
+import { Article, Author, Column, Partner } from '../models';
 
 interface Section {
   secId: string;
@@ -19,6 +19,7 @@ interface Apis {
   columns: Section;
   news: Section;
   resources: Section;
+  partners: Section;
 }
 
 const articleNotFound: Article = {
@@ -36,6 +37,14 @@ const authorNotFound: Author =   {
   description: 'born with the web',
   avatar: './_images/Tim刘.png',
   columnist: false,
+  homepage: '/'
+};
+
+const partnerNotFound: Partner =   {
+  id: '404',
+  name: '404',
+  description: 'born with the web',
+  avatar: './_images/Tim刘.png',
   homepage: '/'
 };
 
@@ -79,7 +88,14 @@ const apiConst = {
     secTitle: '资源雷达',
     itemTitle: '资源详情',
     notFound: articleNotFound
+  },
+  partners: {
+    secId: 'partners',
+    secTitle: '友情链接',
+    itemTitle: '伙伴介绍',
+    notFound: partnerNotFound
   }
+
 };
 @Injectable()
 export class ApiService {
@@ -120,8 +136,14 @@ export class ApiService {
       itemTitle: ApiService.apiConst.resources.itemTitle,
       query: this.idQuery,
       notFound: ApiService.apiConst.resources.notFound
+    },
+    partners: {
+      secId: ApiService.apiConst.partners.secId,
+      secTitle: ApiService.apiConst.partners.secTitle,
+      itemTitle: ApiService.apiConst.partners.itemTitle,
+      query: this.idQuery,
+      notFound: ApiService.apiConst.partners.notFound
     }
-
   };
 
 

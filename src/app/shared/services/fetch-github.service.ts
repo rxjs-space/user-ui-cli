@@ -142,6 +142,7 @@ export class FetchGithubService {
             // for author or column, replace at property avatar
             case 'authors':
             case 'columns':
+            case 'partners':
               items = items.map(item => Object.assign({}, item, {
                 avatar: this.rawUrl2(secId, item.avatar)
               }));

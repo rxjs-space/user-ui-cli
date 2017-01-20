@@ -27,8 +27,8 @@ export class ListComponent implements OnInit {
   ngOnInit() {
 
     switch (this.secId) {
-      case 'authors':
-      case 'columns':
+      case apiConst.authors.secId:
+      case apiConst.columns.secId:
         this.useMenuListComponent = true;
         this.menuItems = this.items.map(item => ({
           icon: item.avatar,
@@ -37,13 +37,22 @@ export class ListComponent implements OnInit {
           url: `./${item.id}`
         }));
         break;
-      case 'news':
-      case 'resources':
+      case apiConst.news.secId:
+      case apiConst.resources.secId:
         this.useMenuListComponent = true;
         this.menuItems = this.items.map(item => ({
           title: item.title,
           icon: item.image,
           description: item.summary,
+          url: `./${item.id}`
+        }));
+        break;
+      case apiConst.partners.secId:
+        this.useMenuListComponent = true;
+        this.menuItems = this.items.map(item => ({
+          title: item.name,
+          icon: item.avatar,
+          description: item.description,
           url: `./${item.id}`
         }));
         break;
