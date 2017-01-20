@@ -1,9 +1,9 @@
 <header>
   <ol class="breadcrumb">
     <li class="breadcrumb-item">
-      <a routerLink="../">{{secTitle}}</a>
+      <a routerLink="../">{{data?.apiConst[secId].secTitle}}</a>
     </li>
-    <li class="breadcrumb-item active">{{data?.title}}</li>
+    <li class="breadcrumb-item active">{{data?.apiConst[secId].itemTitle}}</li>
   </ol>
 </header>
 

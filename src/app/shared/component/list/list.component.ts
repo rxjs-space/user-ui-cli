@@ -1,6 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MenuItem } from '../../models';
-import { apiConst } from '../../api';
+import { ApiService } from '../../api';
+
+const apiConst = ApiService.apiConst;
 
 const authorsOrColumns = [
   apiConst.authors.secId,

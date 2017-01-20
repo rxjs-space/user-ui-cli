@@ -26,16 +26,16 @@ export class HomeComponent implements OnInit {
    * after getting the items, transform the items if necessary
    */
   ngOnInit() {
-    // it may not be good practice to get secId by getValue()
-    this.secId = (<BehaviorSubject<UrlSegment[]>>(this.route.parent.url)).getValue()[0].path;
-
     this.itemsRx = this.route.data
       .switchMap((data: {items?: any[]}) => {
-        console.log(data);
+        // console.log(data);
         this.data = data;
         return this.route.params;
       })
-      .switchMap(params => this.api.apis[this.secId].query(this.data.items, params))
+      .switchMap(params => {
+        this.secId = (<any>params).secId;
+        return this.api.apis[this.secId].query(this.data.items, params);
+      })
 
   }
 }

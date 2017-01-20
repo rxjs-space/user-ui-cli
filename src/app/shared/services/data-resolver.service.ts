@@ -15,14 +15,15 @@ export class DataResolverService implements Resolve<any> {
     private api: ApiService
   ) { }
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> {
-    console.log(route.url[0].path);
-    console.log(state);
+    // console.log(route.url[0].path);
+    // console.log(state);
     const currentUrl = route.url[0].path;
     const parentUrl = route.parent.url[0].path;
     const isApiSec = this.api.apisArr.indexOf(currentUrl) > -1;
-    console.log(isApiSec);
+    // console.log(isApiSec);
     if (isApiSec) {
-      return this.fg.fetchJson(currentUrl);
+      const secId = currentUrl;
+      return this.fg.fetchJson(secId);
     } else {
       return Observable.of([]);
     }

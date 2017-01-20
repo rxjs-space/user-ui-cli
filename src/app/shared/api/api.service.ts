@@ -5,25 +5,6 @@ import { Observable } from 'rxjs/Observable';
 // import { ColumnsApi } from './columns.api';
 import { Article, Author, Column } from '../models';
 
-export const apiConst = {
-  articles: {
-    secId: 'articles',
-    secTitle: '精品文章',
-    itemTitle: '文章内容'
-  },
-  authors: {
-    secId: 'authors',
-    secTitle: '特约作者',
-    itemTitle: '作者详情'
-  },
-  columns: {
-    secId: 'columns',
-    secTitle: '技术专栏',
-    itemTitle: '专栏内容'
-  }
-};
-
-
 interface Section {
   secId: string;
   secTitle: string;
@@ -36,31 +17,62 @@ interface Apis {
   articles: Section;
   authors: Section;
   columns: Section;
+  news: Section;
 }
 
 @Injectable()
 export class ApiService {
+  static apiConst = {
+    articles: {
+      secId: 'articles',
+      secTitle: '精品文章',
+      itemTitle: '文章内容'
+    },
+    authors: {
+      secId: 'authors',
+      secTitle: '特约作者',
+      itemTitle: '作者详情'
+    },
+    columns: {
+      secId: 'columns',
+      secTitle: '技术专栏',
+      itemTitle: '专栏内容'
+    },
+    news: {
+      secId: 'news',
+      secTitle: '前沿观察',
+      itemTitle: '新闻详情'
+    }
+  };
+
   apis: Apis = {
     articles: {
-      secId: apiConst.articles.secId,
-      secTitle: apiConst.articles.secTitle,
-      itemTitle: apiConst.articles.itemTitle,
+      secId: ApiService.apiConst.articles.secId,
+      secTitle: ApiService.apiConst.articles.secTitle,
+      itemTitle: ApiService.apiConst.articles.itemTitle,
       query: this.articlesQuery,
       notFound: this.articleNotFound
     },
     authors: {
-      secId: apiConst.authors.secId,
-      secTitle: apiConst.authors.secTitle,
-      itemTitle: apiConst.authors.itemTitle,
+      secId: ApiService.apiConst.authors.secId,
+      secTitle: ApiService.apiConst.authors.secTitle,
+      itemTitle: ApiService.apiConst.authors.itemTitle,
       query: this.idQuery,
       notFound: this.authorNotFound
     },
     columns: {
-      secId: apiConst.columns.secId,
-      secTitle: apiConst.columns.secTitle,
-      itemTitle: apiConst.columns.itemTitle,
+      secId: ApiService.apiConst.columns.secId,
+      secTitle: ApiService.apiConst.columns.secTitle,
+      itemTitle: ApiService.apiConst.columns.itemTitle,
       query: this.idQuery,
       notFound: this.columnsNotFound
+    },
+    news: {
+      secId: ApiService.apiConst.news.secId,
+      secTitle: ApiService.apiConst.news.secTitle,
+      itemTitle: ApiService.apiConst.news.itemTitle,
+      query: this.idQuery,
+      notFound: this.articleNotFound
     }
   };
 
