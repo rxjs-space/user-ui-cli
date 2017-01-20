@@ -12,12 +12,11 @@ import { FetchGithubService } from '../../services';
 
 type myParams = { secId?: string };
 type myData = { items: any[], apiConst: any };
-type pUPD = { 
-  parentUrl: UrlSegment;
-  params: myParams;
+type myComboPDP = {
+  parentUrl: UrlSegment[];
   data: myData;
-};
-
+  params: myParams;
+}
 @Component({
   selector: 'app-show',
   templateUrl: './show.component.html',
@@ -34,30 +33,34 @@ export class ShowComponent implements OnInit {
     private fgs: FetchGithubService,
     private router: Router) { }
 
-  /**
-   * get the html for the item from github, based on data.secId
-   */
+
   ngOnInit() {
 
-    this.itemRx = this.route.parent.url
-      .switchMap(parentUrl => {
-        return this.route.data;
-      })
-      .switchMap((data: myData) => {
-        return this.route.params;
-      }, (data, params) => ({data, params}))
-      .switchMap(comboDP => {
-        const { data, params } = comboDP;
+    /**
+     * this itemRx will emit an item with html, the html will replace a property of item
+     * see this.replaceWithHtml for detail about which property to replace
+     * 
+     * the process will query the fake api first, and if any item found, it will go fetch the html
+     */
+    this.itemRx = Observable.combineLatest(
+        // each time the route.parent.url or route.data or route.params changes
+        // restart the process of fetching the item
+        this.route.parent.url, this.route.data, this.route.params,
+        (parentUrl, data, params) => (<myComboPDP>{parentUrl, data, params})
+      )
+      .switchMap(comboPDP => {
+        const { parentUrl, data, params } = comboPDP;
         const secId = params.secId;
         this.titles = {
           secTitle: data.apiConst[secId].secTitle,
           itemTitle: data.apiConst[secId].itemTitle,
         };
+        // get the items from the fake api
         return this.api.apis[secId].query(data.items, params);
-      }, (comboDP, items: any[]) => ({data: comboDP.data, params: comboDP.params, items}))
-      .map(comboDPI => {
-        const { data, params, items } = comboDPI;
-        const secId = params.secId;
+      }, (comboPDP, items) => (<{secId: string, items: any[]}>{secId: comboPDP.params.secId, items}))
+      .map(comboSI => {
+        // we need the 1st item of the items
+        const { secId, items } = comboSI;
         let item;
         if (!items.length) {
           item = Object.assign({}, this.api.apis[secId].notFound);
@@ -71,19 +74,56 @@ export class ShowComponent implements OnInit {
       .switchMap(this.fetchHtml.bind(this), (item, html) => ({item, html}))
       .map(this.replaceWithHtml);
 
+    // this.itemRx = this.route.parent.url
+    //   .switchMap(parentUrl => {
+    //     return this.route.data;
+    //   })
+    //   .switchMap((data: myData) => {
+    //     return this.route.params;
+    //   }, (data, params) => ({data, params}))
+    //   .switchMap(comboDP => {
+    //     const { data, params } = comboDP;
+    //     const secId = params.secId;
+    //     this.titles = {
+    //       secTitle: data.apiConst[secId].secTitle,
+    //       itemTitle: data.apiConst[secId].itemTitle,
+    //     };
+    //     return this.api.apis[secId].query(data.items, params);
+    //   }, (comboDP, items: any[]) => ({data: comboDP.data, params: comboDP.params, items}))
+    //   .map(comboDPI => {
+    //     const { data, params, items } = comboDPI;
+    //     const secId = params.secId;
+    //     let item;
+    //     if (!items.length) {
+    //       item = Object.assign({}, this.api.apis[secId].notFound);
+    //     } else {
+    //       item = Object.assign({}, items[0]);
+    //     }
+    //     item.secId = secId;
+    //     return item;
+    //   })
+    //   .do(this.setDocumentTitle)
+    //   .switchMap(this.fetchHtml.bind(this), (item, html) => ({item, html}))
+    //   .map(this.replaceWithHtml);
+
   }
 
   fetchHtml(item) {
     switch (true) {
       case item.secId === 'columns':
-        return Observable.of(''); // this will be the html that will not be used
+        // no need to fetch html for 'columns'
+        return Observable.of('');
       case item.id === '404':
-        return Observable.of('<p>找到个404</p>'); // this will be the html for 404
+        // if no item found, html for be ...
+        return Observable.of('<p>找到个404</p>');
       default:
         return this.fgs.fetchAndReplace(item.secId, item);
     }
   }
 
+  /**
+   * after fetching html, replace item[property] with the html, where necessary
+   */
   replaceWithHtml(combo: any) {
     const secId = combo.item.secId;
     switch (secId) {
