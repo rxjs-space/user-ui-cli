@@ -16,7 +16,8 @@ type myComboPDP = {
   parentUrl: UrlSegment[];
   data: myData;
   params: myParams;
-}
+};
+
 @Component({
   selector: 'app-show',
   templateUrl: './show.component.html',
@@ -130,6 +131,7 @@ export class ShowComponent implements OnInit {
     const secId = combo.item.secId;
     switch (secId) {
       case 'articles':
+      case 'news':
         combo.item.content = combo.html; break;
       case 'authors':
         combo.item.description = combo.html;
@@ -141,9 +143,12 @@ export class ShowComponent implements OnInit {
   setDocumentTitle(item: {title?: string, name?: string, secId: string}) {
     switch (item.secId) {
       case 'articles':
+      case 'news':
         document.title = `${item.title} - Angular中文社区`; break;
       case 'authors':
         document.title = `${item.name} - 作者 - Angular中文社区`; break;
+      default:
+        document.title = `Angular中文社区`; break;
     }
   }
 

@@ -18,7 +18,7 @@ export class ListComponent implements OnInit {
   @Input() items: any[];
   @Input() secId: string;
   menuItems: MenuItem[];
-  isAuthorsOrColumns: boolean;
+  useMenuListComponent: boolean;
   constructor() { }
 
   /**
@@ -26,15 +26,28 @@ export class ListComponent implements OnInit {
    */
   ngOnInit() {
 
-    if ( authorsOrColumns.indexOf(this.secId) > -1 ) {
-      this.isAuthorsOrColumns = true;
-      this.menuItems = this.items.map(item => ({
-        icon: item.avatar,
-        description: item.bio,
-        title: item.name,
-        url: `./${item.id}`
-      }));
+    switch (this.secId) {
+      case 'authors':
+      case 'columns':
+        this.useMenuListComponent = true;
+        this.menuItems = this.items.map(item => ({
+          icon: item.avatar,
+          description: item.bio,
+          title: item.name,
+          url: `./${item.id}`
+        }));
+        break;
+      case 'news':
+        this.useMenuListComponent = true;
+        this.menuItems = this.items.map(item => ({
+          title: item.title,
+          icon: item.image,
+          description: item.summary,
+          url: `/library/news/${item.id}`
+        }));
+        break;
     }
+
   }
 
 }

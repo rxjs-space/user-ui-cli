@@ -18,10 +18,9 @@
 </ng-container>
 
 
-<ng-container *ngIf="isAuthorsOrColumns">
+<ng-container *ngIf="useMenuListComponent">
   <template [ngTemplateOutlet]="nothingFound"></template>
   <app-menu-list [items]="menuItems"></app-menu-list>
 </ng-container>
-
 
 

@@ -105,3 +105,31 @@
     </div>
   </div>
 </div>
+
+<div *ngIf="item.secId === 'news'" class="news-detail">
+  <h2>{{item.title}}</h2>
+
+  <p>
+    <a *ngFor="let author of item.authors" [routerLink]="['/library/authors', author]">{{author}}</a>
+    <a *ngFor="let translator of item.translators"
+      [routerLink]="['/library/authors', translator]">[译]{{translator}}</a>
+    <label *ngIf="item.translation">译作</label>
+    <label *ngIf="item.exclusive">独家</label>
+    <label *ngIf="item.first">首发</label>
+    <label *ngIf="!item.forward">原创</label>
+    <label *ngIf="item.forward">转载</label>
+  </p>
+
+  <p *ngIf="item.originalUrl">
+    <label>原文</label><a [href]="item.originalUrl">{{item.originalUrl}}</a>
+  </p>
+
+  <blockquote>
+    <app-html-viewer *ngIf="item.summary" [content]="item.summary"></app-html-viewer>
+  </blockquote>
+
+  <app-html-viewer [content]="item.content"></app-html-viewer>
+
+
+</div>
+

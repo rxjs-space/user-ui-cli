@@ -56,8 +56,11 @@ export class FetchGithubService {
      */
     let mapKey;
     switch (secId) {
-      case this.api.apis.articles.secId: mapKey = item.content; break;
-      case this.api.apis.authors.secId: mapKey = item.description; break;
+      case this.api.apis.articles.secId:
+      case this.api.apis.news.secId:
+        mapKey = item.content; break;
+      case this.api.apis.authors.secId:
+        mapKey = item.description; break;
     }
     const cached = this.cache.get(mapKey);
     if (cached) {
@@ -78,6 +81,7 @@ export class FetchGithubService {
     let apiUrl, pathPrefix;
     switch (secId) {
       case this.api.apis.articles.secId:
+      case this.api.apis.news.secId:
         apiUrl = this.apiUrl(secId, mapKey);
         pathPrefix = this.rawUrl2(secId, `${mapKey}/`).replace(/_index.md/, ''); // article.content has '_index.md' at the end
         break;
@@ -114,6 +118,7 @@ export class FetchGithubService {
    * for above rawUrl, username = 'rxjs-space', apiRepoName = 'user-ui-api', pathToApi = '', secId = 'articles', filePath = 'index.json'
    */
   rawUrl2(secId: string, filePath: string) {
+    // console.log(secId);
     const userNameAndRepoName = `${this.apiConfig.githubUsername}/${this.apiConfig.apiRepoName}`;
     return `https://raw.githubusercontent.com/${userNameAndRepoName}/master/${this.apiConfig.pathToApi}/${secId}/${filePath}`;
   }
@@ -128,14 +133,26 @@ export class FetchGithubService {
       return Observable.of(itemsCached);
     } else {
       return this.http.get(rawUrl)
-        .map(res => { // for author.avatar or column.avatar, replace relative path with rawUrl
-          if (secId === 'authors' || secId === 'columns') {
-            return res.json().map(item => Object.assign({}, item, {
+        .map(res => {
+          // replace relative path with rawUrl where necessary
+          let items = res.json();
+          switch (secId) {
+            // for author or column, replace at property avatar
+            case 'authors':
+            case 'columns':
+              items = items.map(item => Object.assign({}, item, {
                 avatar: this.rawUrl2(secId, item.avatar)
-            }));
-          } else {
-            return res.json();
+              }));
+              break;
+            case 'news':
+              items = items.map(item => Object.assign({}, item, {
+                image: this.rawUrl2(secId, item.image)
+              }));
+              break;
           }
+          return items;
+
+
         })
         .do(items => this.cache.set(secId, items));
     }
